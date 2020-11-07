@@ -108,7 +108,7 @@ public final class RestaurantListVC: MultiSectionTableComponentViewController {
                     componentsController.restaurantComponent { (component: inout RestaurantComponent) -> Void in
                         let isExpanded = state.expandableDict["RESTAURANT 1"] == true
                         component.id = "RESTAURANT 1"
-                        component.title = "MCDO1"
+                        component.title = "MCDO"
                         component.isExpanded = isExpanded
                         component.setExpandableState = { [weak self] (id: String, isExpanded: Bool) -> Void in
                             guard let s = self else { return }
