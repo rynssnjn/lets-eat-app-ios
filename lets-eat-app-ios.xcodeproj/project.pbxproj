@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		345F405EAE847DCE7768FE68 /* Pods_lets_eat_app_ios.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 339389458729FA115424601A /* Pods_lets_eat_app_ios.framework */; };
+		8E32677D255715A200399F6E /* Acknowledgements.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8E32677C255715A200399F6E /* Acknowledgements.plist */; };
 		8E4067142556ABEC00A8445A /* LetsEatAppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E4067132556ABEC00A8445A /* LetsEatAppCoordinator.swift */; };
 		8E4067262556B47A00A8445A /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = 8E4067252556B47A00A8445A /* .swiftlint.yml */; };
 		8E4067502556B99000A8445A /* RestaurantListCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E40674F2556B99000A8445A /* RestaurantListCoordinator.swift */; };
@@ -34,6 +35,7 @@
 /* Begin PBXFileReference section */
 		339389458729FA115424601A /* Pods_lets_eat_app_ios.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_lets_eat_app_ios.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5D04356D4F674F48589B388B /* Pods-lets-eat-app-ios.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-lets-eat-app-ios.release.xcconfig"; path = "Target Support Files/Pods-lets-eat-app-ios/Pods-lets-eat-app-ios.release.xcconfig"; sourceTree = "<group>"; };
+		8E32677C255715A200399F6E /* Acknowledgements.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Acknowledgements.plist; sourceTree = "<group>"; };
 		8E4067132556ABEC00A8445A /* LetsEatAppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LetsEatAppCoordinator.swift; sourceTree = "<group>"; };
 		8E4067252556B47A00A8445A /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
 		8E40674F2556B99000A8445A /* RestaurantListCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantListCoordinator.swift; sourceTree = "<group>"; };
@@ -95,6 +97,7 @@
 				8E5331062556A8D70088B120 /* Info.plist */,
 				8E5331032556A8D70088B120 /* LaunchScreen.storyboard */,
 				8E5331012556A8D70088B120 /* Assets.xcassets */,
+				8E32677C255715A200399F6E /* Acknowledgements.plist */,
 			);
 			path = "Supporting Files";
 			sourceTree = "<group>";
@@ -300,6 +303,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8E32677D255715A200399F6E /* Acknowledgements.plist in Resources */,
 				8E4067262556B47A00A8445A /* .swiftlint.yml in Resources */,
 				8E5331052556A8D70088B120 /* LaunchScreen.storyboard in Resources */,
 				8E5331022556A8D70088B120 /* Assets.xcassets in Resources */,
