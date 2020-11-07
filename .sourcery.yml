@@ -1,0 +1,11 @@
+sources:
+    - Source
+    - Pods/Cyanic/Sources/Protocols
+templates:
+    - Pods/Cyanic/Templates
+output:
+    Source/Sourcery
+disableCache:
+    true
+args:
+    "isFramework": false
