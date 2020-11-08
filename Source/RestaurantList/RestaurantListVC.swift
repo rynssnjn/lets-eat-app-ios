@@ -12,11 +12,12 @@ import Cyanic
 import LayoutKit
 import Astral
 import CoreLocation
+import CommonWidgets
 
 public final class RestaurantListVC: MultiSectionTableComponentViewController {
 
     // MARK: Delegate Properties
-    private weak var delegate: RestaurantListVCDelegate?
+    private unowned var delegate: RestaurantListVCDelegate
 
     // MARK: Initializers
     public init(delegate: RestaurantListVCDelegate) {
@@ -34,7 +35,6 @@ public final class RestaurantListVC: MultiSectionTableComponentViewController {
     // MARK: Stored Properties
     private let viewModel: RestaurantListVM
     private let locationManager: CLLocationManager = CLLocationManager()
-    private var currentLocation: CLLocation?
 
     // MARK: Computed Properties
     public override var viewModels: [AnyViewModel] {
@@ -51,6 +51,13 @@ public final class RestaurantListVC: MultiSectionTableComponentViewController {
         self.locationManager.desiredAccuracy = kCLLocationAccuracyBest
         self.checkLocationAuthorization()
         self.getRestaurants()
+
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(
+            title: "Libraries",
+            style: UIBarButtonItem.Style.plain,
+            target: self,
+            action: #selector(RestaurantListVC.librariesItemTapped)
+        )
     }
 
     // MARK: Instance Methods
@@ -77,8 +84,14 @@ public final class RestaurantListVC: MultiSectionTableComponentViewController {
     private func getRestaurants() {
 //        Cyanic.withState(of: self.viewModel) { [weak self] (state: RestaurantListState) -> Void in
 //            guard let s = self else { return }
-//            s.viewModel.getRestaurants(page: state.currentPage).onComplete { (_) -> Void in }
+//            s.viewModel.getRestaurants(page: state.currentPage)
 //        }
+    }
+    public override func invalidate() {
+        Cyanic.withState(of: self.viewModel) { [weak self] (state: RestaurantListState) -> Void in
+            guard let s = self else { return }
+            state.isLoading && state.restaurants.isEmpty ? s.rsj.showActivityIndicator() : s.rsj.hideActivityIndicator()
+        }
     }
     public override func setUpDataSource() -> RxTableViewSectionedAnimatedDataSource<SectionController> {
         let dataSource = super.setUpDataSource()
@@ -91,61 +104,150 @@ public final class RestaurantListVC: MultiSectionTableComponentViewController {
         return dataSource
     }
 
-    public func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        let maximumOffset = scrollView.contentSize.height - scrollView.frame.size.height
-        switch scrollView.contentOffset.y > maximumOffset {
-            case true:
-                self.getRestaurants()
-            case false:
-                break
-        }
-    }
-
-    public override func buildSections(_ sectionsController: inout MultiSectionController) {
-        Cyanic.withState(of: self.viewModel) { (state: RestaurantListState) -> Void in
+    public override func buildSections(_ sectionsController: inout MultiSectionController) { // swiftlint:disable:this function_body_length line_length
+        Cyanic.withState(of: self.viewModel) { [weak self] (state: RestaurantListState) -> Void in
             sectionsController.sectionController { (sectionController: inout SectionController) -> Void in
-                sectionController.buildComponents { (componentsController: inout ComponentsController) -> Void in
-                    componentsController.restaurantComponent { (component: inout RestaurantComponent) -> Void in
+                sectionController
+                    .buildComponents { [weak self] (componentsController: inout ComponentsController) -> Void in
+                    guard let s = self else { return }
+                    componentsController.expandableComponent { (component: inout ExpandableComponent) -> Void in
                         let isExpanded = state.expandableDict["RESTAURANT 1"] == true
                         component.id = "RESTAURANT 1"
-                        component.title = "MCDO"
+                        component.height = 60.0
                         component.isExpanded = isExpanded
-                        component.setExpandableState = { [weak self] (id: String, isExpanded: Bool) -> Void in
-                            guard let s = self else { return }
-                            s.viewModel.setState { (state: inout RestaurantListState) -> Void in
-                                state.expandableDict[id] = isExpanded
+                        component.insets = EdgeInsets(top: 0.0, left: 20.0, bottom: 0.0, right: 15.0)
+                        component.setExpandableState = s.viewModel.setExpandableState
+                        component.accessoryViewType = CommonWidgets.ChevronView.self
+                        component.accessoryViewSize = CGSize(width: 15.0, height: 15.0)
+                        component.dividerLine = DividerLine(
+                            backgroundColor: UIColor.rsj.color(red: 229, green: 229, blue: 234),
+                            insets: EdgeInsets(top: 0.0, left: 20.0, bottom: 0.0, right: 0.0),
+                            height: 1.0
+                        )
+                        component.contentLayout = LabelContentLayout(
+                            text: Text.unattributed("MCDO"),
+                            font: UIFont.boldSystemFont(ofSize: 17.0),
+                            alignment: Alignment.centerLeading,
+                            configuration: { (label: UILabel) -> Void in
+                                label.textColor = UIColor.black
+                            }
+                        )
+                        component.accessoryViewConfiguration = { (view: UIView) -> Void in
+                            guard let view = view as? CommonWidgets.ChevronView else { return }
+                            view.lineColor = UIColor.blue
+                            switch isExpanded {
+                                case true:
+                                    view.direction = CommonWidgets.ChevronView.Direction.down
+                                case false:
+                                    view.direction = CommonWidgets.ChevronView.Direction.right
                             }
                         }
                     }
-                    componentsController.restaurantComponent { (component: inout RestaurantComponent) -> Void in
+
+                    componentsController.expandableComponent { (component: inout ExpandableComponent) -> Void in
                         let isExpanded = state.expandableDict["RESTAURANT 2"] == true
                         component.id = "RESTAURANT 2"
-                        component.title = "JOBEE"
+                        component.height = 60.0
                         component.isExpanded = isExpanded
-                        component.setExpandableState = { [weak self] (id: String, isExpanded: Bool) -> Void in
-                            guard let s = self else { return }
-                            s.viewModel.setState { (state: inout RestaurantListState) -> Void in
-                                state.expandableDict[id] = isExpanded
+                        component.insets = EdgeInsets(top: 0.0, left: 20.0, bottom: 0.0, right: 15.0)
+                        component.setExpandableState = s.viewModel.setExpandableState
+                        component.accessoryViewType = CommonWidgets.ChevronView.self
+                        component.accessoryViewSize = CGSize(width: 15.0, height: 15.0)
+                        component.dividerLine = DividerLine(
+                            backgroundColor: UIColor.rsj.color(red: 229, green: 229, blue: 234),
+                            insets: EdgeInsets(top: 0.0, left: 20.0, bottom: 0.0, right: 0.0),
+                            height: 1.0
+                        )
+                        component.contentLayout = LabelContentLayout(
+                            text: Text.unattributed("JOBEE"),
+                            font: UIFont.boldSystemFont(ofSize: 17.0),
+                            alignment: Alignment.centerLeading,
+                            configuration: { (label: UILabel) -> Void in
+                                label.textColor = UIColor.black
+                            }
+                        )
+                        component.accessoryViewConfiguration = { (view: UIView) -> Void in
+                            guard let view = view as? CommonWidgets.ChevronView else { return }
+                            view.lineColor = UIColor.blue
+                            switch isExpanded {
+                                case true:
+                                    view.direction = CommonWidgets.ChevronView.Direction.down
+                                case false:
+                                    view.direction = CommonWidgets.ChevronView.Direction.right
                             }
                         }
                     }
+
 //                    state.restaurants.forEach { (restaurant: Restaurant) -> Void in
-//                        componentsController.restaurantComponent { (component: inout RestaurantComponent) -> Void in
-//                            let isExpanded = state.expandableDict[restaurant.id] == true
-//                            component.id = restaurant.id
-//                            component.title = restaurant.name
-//                            component.isExpanded = isExpanded
-//                            component.setExpandableState = { [weak self] (id: String, isExpanded: Bool) -> Void in
-//                                guard let s = self else { return }
-//                                s.viewModel.setState { (state: inout RestaurantListState) -> Void in
-//                                    state.expandableDict[id] = isExpanded
+//                        let expandable: ExpandableComponent = componentsController
+//                            .expandableComponent { (component: inout ExpandableComponent) -> Void in
+//                                let id: String = restaurant.id
+//                                let isExpanded: Bool = state.expandableDict[id] == true
+//                                component.id = id
+//                                component.height = 60.0
+//                                component.isExpanded = isExpanded
+//                                component.insets = EdgeInsets(top: 0.0, left: 20.0, bottom: 0.0, right: 15.0)
+//                                component.setExpandableState = s.viewModel.setExpandableState
+//                                component.accessoryViewType = CommonWidgets.ChevronView.self
+//                                component.accessoryViewSize = CGSize(width: 15.0, height: 15.0)
+//                                component.dividerLine = DividerLine(
+//                                    backgroundColor: UIColor.rsj.color(red: 229, green: 229, blue: 234),
+//                                    insets: EdgeInsets(top: 0.0, left: 20.0, bottom: 0.0, right: 0.0),
+//                                    height: 1.0
+//                                )
+//                                component.contentLayout = LabelContentLayout(
+//                                    text: Text.unattributed(restaurant.name),
+//                                    font: UIFont.boldSystemFont(ofSize: 17.0),
+//                                    alignment: Alignment.centerLeading,
+//                                    configuration: { (label: UILabel) -> Void in
+//                                        label.textColor = UIColor.black
+//                                    }
+//                                )
+//                                component.accessoryViewConfiguration = { (view: UIView) -> Void in
+//                                    guard let view = view as? CommonWidgets.ChevronView else { return }
+//                                    view.lineColor = UIColor.blue
+//                                    switch isExpanded {
+//                                        case true:
+//                                            view.direction = CommonWidgets.ChevronView.Direction.down
+//                                        case false:
+//                                            view.direction = CommonWidgets.ChevronView.Direction.right
+//                                    }
 //                                }
+//                        }
+//
+//                        if expandable.isExpanded {
+//                            componentsController
+//                                .imageHeaderComponent { (component: inout ImageHeaderComponent) -> Void in
+//                                component.id = "IMAGEHEADER_\(restaurant.id)"
+//                                component.imageURL = restaurant.featuredImage
+//                            }
+//                            componentsController
+//                                .staticLabelComponent { (component: inout StaticLabelComponent) -> Void in
+//                                component.id = "TEST_\(restaurant.id)"
+//                                component.text = Text.unattributed(restaurant.menuURL)
+//                                component.font = UIFont.boldSystemFont(ofSize: 17.0)
 //                            }
 //                        }
 //                    }
+
+                    if state.restaurants.isEmpty == false && state.isLoading == false {
+                        componentsController.buttonComponent { (component: inout ButtonComponent) -> Void in
+                            component.id = "BUTTON"
+                            component.title = "Load More"
+                            component.onTap = { [weak self] (_: UIButton) -> Void in
+                                guard let s = self else { return }
+                                s.getRestaurants()
+                            }
+                        }
+                    }
                 }
             }
         }
+    }
+
+    // MARK: Helper Functions
+    @objc func librariesItemTapped() {
+        self.delegate.goToAcknowledgements()
     }
 }
 
@@ -153,9 +255,8 @@ public final class RestaurantListVC: MultiSectionTableComponentViewController {
 extension RestaurantListVC: CLLocationManagerDelegate {
     public func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         if !locations.isEmpty {
-            if self.currentLocation == nil {
-                self.currentLocation = locations.first
-                print(currentLocation?.coordinate) // for testing only
+            self.viewModel.setState { (state: inout RestaurantListState) -> Void in
+                state.currentLocation = locations.first
             }
         }
     }

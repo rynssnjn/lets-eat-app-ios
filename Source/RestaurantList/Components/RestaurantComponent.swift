@@ -71,7 +71,7 @@ public struct RestaurantComponent: RestaurantComponentType {
 }
 
 public final class RestaurantComponentLayout: SizeLayout<UIView>, ComponentLayout {
-    public init(component: RestaurantComponent) {
+    public init(component: RestaurantComponent) { // swiftlint:disable:this function_body_length
         let chevronLayout: SizeLayout<ChevronView> = SizeLayout<ChevronView>(
             width: 20.0,
             height: 20.0,

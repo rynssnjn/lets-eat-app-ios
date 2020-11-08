@@ -23,6 +23,15 @@ fileprivate func compareArrays<T>(lhs: [T], rhs: [T], compare: (_ lhs: T, _ rhs:
 }
 
 // MARK: - AutoEquatableComponent
+// MARK: - ImageHeaderComponent AutoEquatableComponent
+extension ImageHeaderComponent: Equatable {}
+public func == (lhs: ImageHeaderComponent, rhs: ImageHeaderComponent) -> Bool {
+    guard lhs.height == rhs.height else { return false }
+    guard lhs.imageURL == rhs.imageURL else { return false }
+    guard lhs.id == rhs.id else { return false }
+    guard lhs.width == rhs.width else { return false }
+    return true
+}
 // MARK: - RestaurantComponent AutoEquatableComponent
 extension RestaurantComponent: Equatable {}
 public func == (lhs: RestaurantComponent, rhs: RestaurantComponent) -> Bool {

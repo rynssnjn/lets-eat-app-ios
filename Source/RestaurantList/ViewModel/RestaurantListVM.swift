@@ -11,13 +11,16 @@ import Cyanic
 import RxSwift
 import Astral
 import BrightFutures
+import CoreLocation
 
 public struct RestaurantListState: ExpandableState {
     public static var `default`: RestaurantListState {
         return RestaurantListState(
             expandableDict: [:],
             restaurants: [],
-            currentPage: 0
+            currentPage: 0,
+            currentLocation: nil,
+            isLoading: false
         )
     }
 
@@ -26,12 +29,17 @@ public struct RestaurantListState: ExpandableState {
     public var restaurants: [Restaurant]
 
     public var currentPage: Int
+
+    public var currentLocation: CLLocation?
+
+    public var isLoading: Bool
 }
 
 public final class RestaurantListVM: ViewModel<RestaurantListState> {
     private let service: RestaurantListService = RestaurantListService()
 
-    public func getRestaurants(page: Int) -> Future<Restaurants, NetworkingError> {
+    public func getRestaurants(page: Int) {
+        self.set(isLoading: true)
         self.service.getRestaurants(page: page)
             .onSuccess { [weak self] (restaurants: Restaurants) -> Void in
                 guard let s = self else { return }
@@ -47,6 +55,14 @@ public final class RestaurantListVM: ViewModel<RestaurantListState> {
             .onFailure { (error: NetworkingError) -> Void in
                 print(error.localizedDescription)
             }
+            .onComplete { [weak self] (_) -> Void in
+                guard let s = self else { return }
+                s.set(isLoading: false)
+            }
+    }
+
+    public func set(isLoading: Bool) {
+        self.setState { $0.isLoading = isLoading }
     }
 
 }
