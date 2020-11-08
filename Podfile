@@ -12,4 +12,10 @@ target 'lets-eat-app-ios' do
   pod 'Cyanic', :git => 'https://github.com/feilfeilundfeil/Cyanic.git', :branch => 'develop'
   pod 'LayoutKit', :git => 'https://github.com/hooliooo/LayoutKit.git'
   pod 'CommonWidgets', :git => 'git@bitbucket.org:FFUF/ffuf-ios-widgets.git'
+  pod 'Kingfisher'
+end
+
+post_install do |installer|
+  require 'fileutils'
+  FileUtils.cp_r('Pods/Target Support Files/Pods-lets-eat-app-ios/Pods-lets-eat-app-ios-acknowledgements.plist', 'Source/Supporting Files/Acknowledgements.plist', :remove_destination => true)
 end

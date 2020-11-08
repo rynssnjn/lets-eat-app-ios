@@ -6,6 +6,12 @@
 //
 
 import Foundation
+import CoreLocation
 
-// TODO: Add delegate methods
-public protocol RestaurantListVCDelegate: class {}
+public protocol RestaurantListVCDelegate: class {
+
+    func goToAcknowledgements()
+
+    func openMaps(coordinates: CLLocationCoordinate2D)
+
+}

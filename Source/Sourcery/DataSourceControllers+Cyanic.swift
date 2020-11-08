@@ -7,6 +7,46 @@ import Cyanic
 public extension ComponentsController {
 
     /**
+        Generates a CategoriesComponent instance and configures its properties with the given closure. You must provide a
+        unique id in the configuration block, otherwise it will force a fatalError.
+        - Parameters:
+            - configuration: The closure that mutates the mutable CategoriesComponent.
+            - mutableComponent: The CategoriesComponent instance to be mutated/configured.
+        - Returns:
+            CategoriesComponent
+    */
+    @discardableResult
+    mutating func categoriesComponent(configuration: (_ mutableComponent: inout CategoriesComponent) -> Void) -> CategoriesComponent {
+        var mutableComponent: CategoriesComponent = CategoriesComponent(id: CyanicConstants.invalidID)
+        configuration(&mutableComponent)
+        mutableComponent.width = self.width
+        guard ComponentStateValidator.hasValidIdentifier(mutableComponent)
+            else { fatalError("You must have a unique identifier for this component") }
+        self.add(mutableComponent)
+        return mutableComponent
+    }
+
+    /**
+        Generates a ImageHeaderComponent instance and configures its properties with the given closure. You must provide a
+        unique id in the configuration block, otherwise it will force a fatalError.
+        - Parameters:
+            - configuration: The closure that mutates the mutable ImageHeaderComponent.
+            - mutableComponent: The ImageHeaderComponent instance to be mutated/configured.
+        - Returns:
+            ImageHeaderComponent
+    */
+    @discardableResult
+    mutating func imageHeaderComponent(configuration: (_ mutableComponent: inout ImageHeaderComponent) -> Void) -> ImageHeaderComponent {
+        var mutableComponent: ImageHeaderComponent = ImageHeaderComponent(id: CyanicConstants.invalidID)
+        configuration(&mutableComponent)
+        mutableComponent.width = self.width
+        guard ComponentStateValidator.hasValidIdentifier(mutableComponent)
+            else { fatalError("You must have a unique identifier for this component") }
+        self.add(mutableComponent)
+        return mutableComponent
+    }
+
+    /**
         Generates a RestaurantComponent instance and configures its properties with the given closure. You must provide a
         unique id in the configuration block, otherwise it will force a fatalError.
         - Parameters:
@@ -28,6 +68,60 @@ public extension ComponentsController {
 }
 
 public extension SectionController {
+
+    /**
+        Generates a CategoriesComponent instance and configures its properties with the given closure. You must provide a
+        unique id in the configuration block, otherwise it will force a fatalError.
+        - Parameters:
+            - configuration: The closure that mutates the mutable CategoriesComponent.
+            - mutableComponent: The CategoriesComponent instance to be mutated/configured.
+        - Returns:
+            CategoriesComponent
+    */
+    @discardableResult
+    mutating func categoriesComponent(for supplementaryView: SectionController.SupplementaryView, configuration: (_ mutableComponent: inout CategoriesComponent) -> Void) -> CategoriesComponent {
+        var mutableComponent: CategoriesComponent = CategoriesComponent(id: CyanicConstants.invalidID)
+        configuration(&mutableComponent)
+        mutableComponent.width = self.width
+        guard ComponentStateValidator.hasValidIdentifier(mutableComponent)
+            else { fatalError("You must have a unique identifier for this component") }
+
+        switch supplementaryView {
+            case .header:
+                self.headerComponent = mutableComponent.asAnyComponent
+            case .footer:
+                self.footerComponent = mutableComponent.asAnyComponent
+        }
+
+        return mutableComponent
+    }
+
+    /**
+        Generates a ImageHeaderComponent instance and configures its properties with the given closure. You must provide a
+        unique id in the configuration block, otherwise it will force a fatalError.
+        - Parameters:
+            - configuration: The closure that mutates the mutable ImageHeaderComponent.
+            - mutableComponent: The ImageHeaderComponent instance to be mutated/configured.
+        - Returns:
+            ImageHeaderComponent
+    */
+    @discardableResult
+    mutating func imageHeaderComponent(for supplementaryView: SectionController.SupplementaryView, configuration: (_ mutableComponent: inout ImageHeaderComponent) -> Void) -> ImageHeaderComponent {
+        var mutableComponent: ImageHeaderComponent = ImageHeaderComponent(id: CyanicConstants.invalidID)
+        configuration(&mutableComponent)
+        mutableComponent.width = self.width
+        guard ComponentStateValidator.hasValidIdentifier(mutableComponent)
+            else { fatalError("You must have a unique identifier for this component") }
+
+        switch supplementaryView {
+            case .header:
+                self.headerComponent = mutableComponent.asAnyComponent
+            case .footer:
+                self.footerComponent = mutableComponent.asAnyComponent
+        }
+
+        return mutableComponent
+    }
 
     /**
         Generates a RestaurantComponent instance and configures its properties with the given closure. You must provide a
