@@ -23,6 +23,17 @@ fileprivate func compareArrays<T>(lhs: [T], rhs: [T], compare: (_ lhs: T, _ rhs:
 }
 
 // MARK: - AutoEquatableComponent
+// MARK: - CategoriesComponent AutoEquatableComponent
+extension CategoriesComponent: Equatable {}
+public func == (lhs: CategoriesComponent, rhs: CategoriesComponent) -> Bool {
+    guard lhs.text == rhs.text else { return false }
+    guard lhs.category == rhs.category else { return false }
+    guard compareOptionals(lhs: lhs.ratings, rhs: rhs.ratings, compare: ==) else { return false }
+    guard lhs.id == rhs.id else { return false }
+    guard lhs.width == rhs.width else { return false }
+    guard lhs.height == rhs.height else { return false }
+    return true
+}
 // MARK: - ImageHeaderComponent AutoEquatableComponent
 extension ImageHeaderComponent: Equatable {}
 public func == (lhs: ImageHeaderComponent, rhs: ImageHeaderComponent) -> Bool {
@@ -35,7 +46,7 @@ public func == (lhs: ImageHeaderComponent, rhs: ImageHeaderComponent) -> Bool {
 // MARK: - RestaurantComponent AutoEquatableComponent
 extension RestaurantComponent: Equatable {}
 public func == (lhs: RestaurantComponent, rhs: RestaurantComponent) -> Bool {
-    guard compareOptionals(lhs: lhs.title, rhs: rhs.title, compare: ==) else { return false }
+    guard compareOptionals(lhs: lhs.restaurant, rhs: rhs.restaurant, compare: ==) else { return false }
     guard lhs.isExpanded == rhs.isExpanded else { return false }
     guard lhs.height == rhs.height else { return false }
     guard lhs.id == rhs.id else { return false }

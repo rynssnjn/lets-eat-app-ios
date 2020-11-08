@@ -14,8 +14,7 @@ import CommonWidgets
 // sourcery: Component = RestaurantComponent
 public protocol RestaurantComponentType: StaticHeightComponent, Selectable {
 
-    // sourcery: defaultValue = """"
-    var title: String? { get set }
+    var restaurant: Restaurant? { get set }
 
     /**
      The action to set the expandable state to expanded or not expanded.
@@ -51,7 +50,7 @@ public struct RestaurantComponent: RestaurantComponentType {
 
     public var width: CGFloat = 0.0
 
-    public var title: String? = ""
+    public var restaurant: Restaurant?
 
     // sourcery: skipHashing, skipEquality
     public var setExpandableState: (String, Bool) -> Void = { (_: String, _: Bool) -> Void in fatalError("This default closure must be replaced!") }
@@ -72,9 +71,10 @@ public struct RestaurantComponent: RestaurantComponentType {
 
 public final class RestaurantComponentLayout: SizeLayout<UIView>, ComponentLayout {
     public init(component: RestaurantComponent) { // swiftlint:disable:this function_body_length
+        let commonInset: EdgeInsets = EdgeInsets(top: 0.0, left: 20.0, bottom: 0.0, right: 15.0)
         let chevronLayout: SizeLayout<ChevronView> = SizeLayout<ChevronView>(
-            width: 20.0,
-            height: 20.0,
+            width: 15.0,
+            height: 15.0,
             alignment: Alignment.centerTrailing,
             flexibility: Flexibility.low,
             viewReuseId: "\(RestaurantComponentLayout.identifier)Chevron",
@@ -84,8 +84,8 @@ public final class RestaurantComponentLayout: SizeLayout<UIView>, ComponentLayou
             }
         )
 
-        let deviceNameLayout: LabelLayout<UILabel> = LabelLayout(
-            text: Text.unattributed(component.title!),
+        let restaurantNameLayout: LabelLayout<UILabel> = LabelLayout(
+            text: Text.unattributed(component.restaurant?.name ?? ""),
             font: UIFont.boldSystemFont(ofSize: 17.0),
             lineHeight: 100.0,
             numberOfLines: 0,
@@ -98,19 +98,68 @@ public final class RestaurantComponentLayout: SizeLayout<UIView>, ComponentLayou
             }
         )
 
+        let thumbnailImageLayout: SizeLayout<UIImageView> = SizeLayout<UIImageView>(
+            width: 50.0,
+            height: 50.0,
+            alignment: Alignment.centerTrailing,
+            flexibility: Flexibility.high,
+            viewReuseId: "\(RestaurantComponentLayout.identifier)thumbnail",
+            config: { (view: UIImageView) -> Void in
+                view.loadImage(of: component.restaurant?.thumbnailURL ?? "")
+                view.contentMode = UIView.ContentMode.scaleAspectFill
+                view.clipsToBounds = true
+                view.layer.cornerRadius = 12.0
+            }
+        )
+
+        let restaurantStackLayout: StackLayout<UIView> = StackLayout<UIView>(
+            axis: Axis.horizontal,
+            spacing: 20.0,
+            distribution: StackLayoutDistribution.trailing,
+            alignment: Alignment.fill,
+            flexibility: Flexibility.inflexible,
+            sublayouts: [thumbnailImageLayout, restaurantNameLayout]
+        )
+
         let horizontalStackLayout: StackLayout<UIView> = StackLayout<UIView>(
             axis: Axis.horizontal,
             spacing: 10.0,
             distribution: StackLayoutDistribution.fillEqualSpacing,
             alignment: Alignment.fill,
             flexibility: Flexibility.low,
-            sublayouts: [deviceNameLayout, chevronLayout]
+            sublayouts: [restaurantStackLayout, chevronLayout]
         )
 
         let insetLayout: InsetLayout<UIView> = InsetLayout<UIView>(
-            insets: UIEdgeInsets(top: 10.0, left: 25.0, bottom: 10.0, right: 20.0),
+            insets: commonInset,
             alignment: Alignment.fill,
             sublayout: horizontalStackLayout,
+            config: nil
+        )
+
+        let dividerLayout: SizeLayout<UIView> = SizeLayout<UIView>(
+            width: component.width,
+            height: 1.0,
+            flexibility: Flexibility.inflexible,
+            viewReuseId: "\(RestaurantComponentLayout.identifier)Divider",
+            config: { (view: UIView) -> Void in
+                view.backgroundColor = UIColor.rsj.color(red: 229, green: 229, blue: 234)
+            }
+        )
+
+        let dividerInset: InsetLayout<UIView> = InsetLayout<UIView>(
+            insets: commonInset,
+            alignment: Alignment.fill,
+            sublayout: dividerLayout,
+            config: nil
+        )
+
+        let verticalStackLayout: StackLayout<UIView> = StackLayout<UIView>(
+            axis: Axis.vertical,
+            spacing: 0.0,
+            alignment: Alignment.fill,
+            flexibility: Flexibility.inflexible,
+            sublayouts: [insetLayout, dividerInset],
             config: nil
         )
 
@@ -122,7 +171,7 @@ public final class RestaurantComponentLayout: SizeLayout<UIView>, ComponentLayou
             alignment: Alignment.center,
             flexibility: Flexibility.low,
             viewReuseId: RestaurantComponentLayout.identifier,
-            sublayout: insetLayout,
+            sublayout: verticalStackLayout,
             config: nil
         )
     }

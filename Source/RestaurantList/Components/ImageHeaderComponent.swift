@@ -9,7 +9,6 @@ import Foundation
 import Cyanic
 import LayoutKit
 import CommonWidgets
-import Kingfisher
 
 // sourcery: AutoEquatableComponent,AutoHashableComponent
 // sourcery: Component = ImageHeaderComponent

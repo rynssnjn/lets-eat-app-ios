@@ -23,6 +23,9 @@ public struct Restaurant: Decodable, Hashable {
         case photos = "photos_url"
         case menu = "menu_url"
         case ratings = "user_rating"
+        case schedule = "timings"
+        case type = "cuisines"
+        case highlights
     }
 
     // MARK: Initializer
@@ -40,6 +43,9 @@ public struct Restaurant: Decodable, Hashable {
         self.photosURL = try restaurant.decode(String.self, forKey: RestaurantKeys.photos)
         self.menuURL = try restaurant.decode(String.self, forKey: RestaurantKeys.menu)
         self.ratings = try restaurant.decode(Ratings.self, forKey: RestaurantKeys.ratings)
+        self.schedule = try restaurant.decode(String.self, forKey: RestaurantKeys.schedule)
+        self.type = try restaurant.decode(String.self, forKey: RestaurantKeys.type)
+        self.highlights = try restaurant.decode([String].self, forKey: RestaurantKeys.highlights)
     }
 
     // MARK: Stored Properties
@@ -51,4 +57,7 @@ public struct Restaurant: Decodable, Hashable {
     public let photosURL: String
     public let menuURL: String
     public let ratings: Ratings
+    public let schedule: String
+    public let type: String
+    public let highlights: [String]
 }
