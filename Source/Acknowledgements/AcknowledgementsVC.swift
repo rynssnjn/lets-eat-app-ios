@@ -42,6 +42,12 @@ public final class AcknowledgementsVC: MultiSectionTableComponentViewController 
         ]
     }
 
+    // MARK: UIViewController LifeCycle Methods
+    public override func viewDidLoad() {
+        super.viewDidLoad()
+        self.tableView.separatorStyle = UITableViewCell.SeparatorStyle.none
+    }
+
     // MARK: Instance Methods
     public override func setUpDataSource() -> RxTableViewSectionedAnimatedDataSource<SectionController> {
         let dataSource = super.setUpDataSource()
@@ -57,19 +63,21 @@ public final class AcknowledgementsVC: MultiSectionTableComponentViewController 
     public override func buildSections(_ sectionsController: inout MultiSectionController) { // swiftlint:disable:this function_body_length line_length
         Cyanic.withState(of: self.viewModel) { (state: AcknowledgementsState) -> Void in
             sectionsController.sectionController { (sectionController: inout SectionController) -> Void in
-                sectionController
-                    .buildComponents { [weak self] (componentsController: inout ComponentsController) -> Void in
-                    guard let s = self else { return }
-                    componentsController.staticLabelComponent { (component: inout StaticLabelComponent) -> Void in
-                        component.id = "Title"
-                        component.text = Text.unattributed("Libraries Used")
-                        component.font = UIFont.boldSystemFont(ofSize: 25.0)
-                        component.alignment = Alignment.centerLeading
-                        component.configuration = { (view: UILabel) -> Void in
-                            view.textColor = UIColor.black
-                        }
-                        component.insets = EdgeInsets(top: 30.0, left: 20.0, bottom: 30.0, right: 15.0)
+                sectionController.staticLabelComponent(for: SectionController.SupplementaryView.header) {
+                    (component: inout StaticLabelComponent) -> Void in
+                    component.id = "Title"
+                    component.text = Text.unattributed("Libraries Used")
+                    component.backgroundColor = UIColor.white
+                    component.font = UIFont.boldSystemFont(ofSize: 25.0)
+                    component.alignment = Alignment.centerLeading
+                    component.configuration = { (view: UILabel) -> Void in
+                        view.textColor = UIColor.black
                     }
+                    component.insets = EdgeInsets(top: 30.0, left: 20.0, bottom: 30.0, right: 15.0)
+                }
+                sectionController.buildComponents { [weak self]
+                    (componentsController: inout ComponentsController) -> Void in
+                    guard let s = self else { return }
                     state.acknowledgements.forEach { (acknowledgement: Acknowledgement) -> Void in
                         let expandable: ExpandableComponent = componentsController
                             .expandableComponent { (component: inout ExpandableComponent) -> Void in
@@ -108,7 +116,7 @@ public final class AcknowledgementsVC: MultiSectionTableComponentViewController 
                         }
 
                         if expandable.isExpanded {
-                            componentsController.staticTextComponent { (component: inout StaticTextComponent) in
+                            componentsController.staticTextComponent { (component: inout StaticTextComponent) -> Void in
                                 component.id = "\(acknowledgement.title) content"
                                 component.text = Text.unattributed(acknowledgement.content)
                                 component.font = UIFont.systemFont(ofSize: 17.0)

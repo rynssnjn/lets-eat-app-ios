@@ -16,6 +16,7 @@ public struct Ratings: Decodable, Hashable {
         case average = "aggregate_rating"
         case averageText = "rating_text"
         case votes
+        case color = "rating_color"
     }
 
     // MARK: Initializer
@@ -28,10 +29,12 @@ public struct Ratings: Decodable, Hashable {
         }
         self.averageText = try container.decode(String.self, forKey: Ratings.CodingKeys.averageText)
         self.votes = try container.decode(Int.self, forKey: Ratings.CodingKeys.votes)
+        self.color = try container.decode(String.self, forKey: Ratings.CodingKeys.color)
     }
 
     // MARK: Stored Properties
     public let average: String
     public let averageText: String
     public let votes: Int
+    public let color: String
 }

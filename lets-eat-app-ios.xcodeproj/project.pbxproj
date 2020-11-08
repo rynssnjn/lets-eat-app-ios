@@ -32,6 +32,8 @@
 		8E83264C2557E95600E26CC0 /* AcknowledgementsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E83264B2557E95600E26CC0 /* AcknowledgementsVC.swift */; };
 		8E8326502557E9EE00E26CC0 /* Acknowledgement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E83264F2557E9EE00E26CC0 /* Acknowledgement.swift */; };
 		8E8326542557EAAE00E26CC0 /* AcknowledgementsVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E8326532557EAAE00E26CC0 /* AcknowledgementsVM.swift */; };
+		8E8326C42558077400E26CC0 /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E8326C32558077400E26CC0 /* Category.swift */; };
+		8E8326C82558079500E26CC0 /* CategoriesComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E8326C72558079500E26CC0 /* CategoriesComponent.swift */; };
 		8E91213E2556D694004E5D01 /* BaseConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E91213D2556D694004E5D01 /* BaseConfiguration.swift */; };
 		8E9121432556D846004E5D01 /* SearchRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E9121422556D846004E5D01 /* SearchRequest.swift */; };
 		8E9121482556DA2D004E5D01 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E9121472556DA2D004E5D01 /* Constants.swift */; };
@@ -72,6 +74,8 @@
 		8E83264B2557E95600E26CC0 /* AcknowledgementsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AcknowledgementsVC.swift; sourceTree = "<group>"; };
 		8E83264F2557E9EE00E26CC0 /* Acknowledgement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Acknowledgement.swift; sourceTree = "<group>"; };
 		8E8326532557EAAE00E26CC0 /* AcknowledgementsVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AcknowledgementsVM.swift; sourceTree = "<group>"; };
+		8E8326C32558077400E26CC0 /* Category.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Category.swift; sourceTree = "<group>"; };
+		8E8326C72558079500E26CC0 /* CategoriesComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoriesComponent.swift; sourceTree = "<group>"; };
 		8E91213D2556D694004E5D01 /* BaseConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseConfiguration.swift; sourceTree = "<group>"; };
 		8E9121422556D846004E5D01 /* SearchRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchRequest.swift; sourceTree = "<group>"; };
 		8E9121472556DA2D004E5D01 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
@@ -125,6 +129,7 @@
 		8E40674E2556B96B00A8445A /* RestaurantList */ = {
 			isa = PBXGroup;
 			children = (
+				8E8326C22558074D00E26CC0 /* Enums */,
 				8E9121562556DEA1004E5D01 /* Services */,
 				8E9121412556D824004E5D01 /* Models */,
 				8E91213B2556D667004E5D01 /* Networking */,
@@ -158,6 +163,7 @@
 			children = (
 				8E4067F42556C1CC00A8445A /* RestaurantComponent.swift */,
 				8E8326012557D01200E26CC0 /* ImageHeaderComponent.swift */,
+				8E8326C72558079500E26CC0 /* CategoriesComponent.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -256,6 +262,14 @@
 				8E8326532557EAAE00E26CC0 /* AcknowledgementsVM.swift */,
 			);
 			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		8E8326C22558074D00E26CC0 /* Enums */ = {
+			isa = PBXGroup;
+			children = (
+				8E8326C32558077400E26CC0 /* Category.swift */,
+			);
+			path = Enums;
 			sourceTree = "<group>";
 		};
 		8E91213B2556D667004E5D01 /* Networking */ = {
@@ -467,11 +481,13 @@
 				8E8326402557E88000E26CC0 /* AcknowledgementsCoordinator.swift in Sources */,
 				8E8326502557E9EE00E26CC0 /* Acknowledgement.swift in Sources */,
 				8E83263B2557D6C900E26CC0 /* UIImageViewExtensions.swift in Sources */,
+				8E8326C42558077400E26CC0 /* Category.swift in Sources */,
 				8E8326542557EAAE00E26CC0 /* AcknowledgementsVM.swift in Sources */,
 				8E5330F62556A8D50088B120 /* AppDelegate.swift in Sources */,
 				8E4067ED2556BC6B00A8445A /* RestaurantListVCDelegate.swift in Sources */,
 				8E9121582556DEBE004E5D01 /* RestaurantListService.swift in Sources */,
 				8E8326452557E8AB00E26CC0 /* AcknowledgementsCoordinatorDelegate.swift in Sources */,
+				8E8326C82558079500E26CC0 /* CategoriesComponent.swift in Sources */,
 				8E9121482556DA2D004E5D01 /* Constants.swift in Sources */,
 				8E4067F52556C1CC00A8445A /* RestaurantComponent.swift in Sources */,
 				8E8326022557D01200E26CC0 /* ImageHeaderComponent.swift in Sources */,

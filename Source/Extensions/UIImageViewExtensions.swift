@@ -13,6 +13,8 @@ extension UIImageView {
         if let url: URL = URL(string: imageURL) {
             let image = ImageResource(downloadURL: url, cacheKey: imageURL)
             self.kf.setImage(with: image)
+        } else {
+            self.image = #imageLiteral(resourceName: "placeholder")
         }
     }
 }
