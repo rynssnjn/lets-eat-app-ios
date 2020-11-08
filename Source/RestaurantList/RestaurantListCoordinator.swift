@@ -28,7 +28,21 @@ public final class RestaurantListCoordinator: AbstractCoordinator {
     private unowned let navigationController: UINavigationController
 }
 
-extension RestaurantListCoordinator: RestaurantListVCDelegate {}
+// MARK: RestaurantListVCDelegate Methods
+extension RestaurantListCoordinator: RestaurantListVCDelegate {
+    public func goToAcknowledgements() {
+        let coordinator: AcknowledgementsCoordinator = AcknowledgementsCoordinator(
+            delegate: self,
+            navigationController: self.navigationController
+        )
+
+        coordinator.start()
+        self.add(childCoordinator: coordinator)
+    }
+}
+
+// MARK: AcknowledgementsCoordinatorDelegate Methods
+extension RestaurantListCoordinator: AcknowledgementsCoordinatorDelegate {}
 
 extension RestaurantListCoordinator: UINavigationControllerDelegate {
     public func navigationController(_ navigationController: UINavigationController, didShow viewController: UIViewController, animated: Bool) { //swiftlint:disable:this line_length

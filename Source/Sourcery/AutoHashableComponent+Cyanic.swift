@@ -3,6 +3,15 @@
 
 // swiftlint:disable all
 // MARK: - AutoHashableComponent
+// MARK: - ImageHeaderComponent AutoHashableComponent
+extension ImageHeaderComponent: Hashable {
+    public func hash(into hasher: inout Hasher) {
+        self.height.hash(into: &hasher)
+        self.imageURL.hash(into: &hasher)
+        self.id.hash(into: &hasher)
+        self.width.hash(into: &hasher)
+    }
+}
 // MARK: - RestaurantComponent AutoHashableComponent
 extension RestaurantComponent: Hashable {
     public func hash(into hasher: inout Hasher) {

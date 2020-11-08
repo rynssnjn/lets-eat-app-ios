@@ -7,5 +7,8 @@
 
 import Foundation
 
-// TODO: Add delegate methods
-public protocol RestaurantListVCDelegate: class {}
+public protocol RestaurantListVCDelegate: class {
+
+    func goToAcknowledgements()
+
+}
