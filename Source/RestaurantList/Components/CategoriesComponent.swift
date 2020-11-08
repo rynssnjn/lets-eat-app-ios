@@ -87,11 +87,13 @@ public final class CategoriesComponentLayout: SizeLayout<UIView>, ComponentLayou
                 font: UIFont.boldSystemFont(ofSize: 17.0),
                 alignment: Alignment.center,
                 flexibility: Flexibility.high,
-                viewReuseId: "\(CategoriesComponentLayout.identifier)Value",
+                viewReuseId: "\(CategoriesComponentLayout.identifier)LabelValue",
                 config: { (view: UILabel) -> Void in
                     if component.category == Category.ratings {
                         guard let ratings = component.ratings else { return }
                         view.textColor = UIColor.rsj.color(hexValue: ratings.color)
+                    } else {
+                        view.textColor = UIColor.black
                     }
                     view.textAlignment = NSTextAlignment.right
                 }
@@ -100,7 +102,7 @@ public final class CategoriesComponentLayout: SizeLayout<UIView>, ComponentLayou
                 font: UIFont.systemFont(ofSize: 17.0),
                 layoutAlignment: Alignment.center,
                 flexibility: Flexibility.high,
-                viewReuseId: "\(CategoriesComponentLayout.identifier)Value",
+                viewReuseId: "\(CategoriesComponentLayout.identifier)TextValue",
                 config: { (view: UITextView) -> Void in
                     view.textColor = UIColor.black
                     view.isEditable = false
