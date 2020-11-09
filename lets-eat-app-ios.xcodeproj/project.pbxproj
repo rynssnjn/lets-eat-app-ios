@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8E07878725597AB200D732CE /* LocationComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E07878625597AB200D732CE /* LocationComponent.swift */; };
 		8E1C455B2559310500FDA721 /* ImageCacheManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E1C455A2559310500FDA721 /* ImageCacheManager.swift */; };
 		8E1C455E255938AA00FDA721 /* ImageCacheInjected.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E1C455D255938AA00FDA721 /* ImageCacheInjected.swift */; };
 		8E32677D255715A200399F6E /* Acknowledgements.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8E32677C255715A200399F6E /* Acknowledgements.plist */; };
@@ -49,6 +50,7 @@
 /* Begin PBXFileReference section */
 		098C6F0F6C803A2DC818BEA3 /* Pods-lets-eat-app-ios.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-lets-eat-app-ios.release.xcconfig"; path = "Target Support Files/Pods-lets-eat-app-ios/Pods-lets-eat-app-ios.release.xcconfig"; sourceTree = "<group>"; };
 		19F096AD387556F7672B2F4F /* Pods-lets-eat-app-ios.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-lets-eat-app-ios.debug.xcconfig"; path = "Target Support Files/Pods-lets-eat-app-ios/Pods-lets-eat-app-ios.debug.xcconfig"; sourceTree = "<group>"; };
+		8E07878625597AB200D732CE /* LocationComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationComponent.swift; sourceTree = "<group>"; };
 		8E1C455A2559310500FDA721 /* ImageCacheManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCacheManager.swift; sourceTree = "<group>"; };
 		8E1C455D255938AA00FDA721 /* ImageCacheInjected.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCacheInjected.swift; sourceTree = "<group>"; };
 		8E32677C255715A200399F6E /* Acknowledgements.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Acknowledgements.plist; sourceTree = "<group>"; };
@@ -168,6 +170,7 @@
 				8E4067F42556C1CC00A8445A /* RestaurantComponent.swift */,
 				8E8326012557D01200E26CC0 /* ImageHeaderComponent.swift */,
 				8E8326C72558079500E26CC0 /* CategoriesComponent.swift */,
+				8E07878625597AB200D732CE /* LocationComponent.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -505,6 +508,7 @@
 				8E4067542556BA4F00A8445A /* RestaurantListVC.swift in Sources */,
 				8E8325FF2557C4D300E26CC0 /* Ratings.swift in Sources */,
 				8E40685D2556CF8F00A8445A /* DataSourceControllers+Cyanic.swift in Sources */,
+				8E07878725597AB200D732CE /* LocationComponent.swift in Sources */,
 				8E40685C2556CF8F00A8445A /* AutoHashableComponent+Cyanic.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
