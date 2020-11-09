@@ -166,6 +166,11 @@ public final class RestaurantListVC: MultiSectionTableComponentViewController {
                             }
 
                             if restaurantComponent.isExpanded {
+                                componentsController.locationComponent { (component: inout LocationComponent) -> Void in
+                                    component.id = "\(restaurant.id)Location"
+                                    component.location = restaurant.location
+                                    component.onTap = { print("") }
+                                }
                                 componentsController.imageHeaderComponent {
                                     (component: inout ImageHeaderComponent) -> Void in
                                         component.id = "\(restaurant.id)ImageHeader"

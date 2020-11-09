@@ -23,6 +23,15 @@ extension ImageHeaderComponent: Hashable {
         self.width.hash(into: &hasher)
     }
 }
+// MARK: - LocationComponent AutoHashableComponent
+extension LocationComponent: Hashable {
+    public func hash(into hasher: inout Hasher) {
+        self.height.hash(into: &hasher)
+        self.location.hash(into: &hasher)
+        self.id.hash(into: &hasher)
+        self.width.hash(into: &hasher)
+    }
+}
 // MARK: - RestaurantComponent AutoHashableComponent
 extension RestaurantComponent: Hashable {
     public func hash(into hasher: inout Hasher) {
