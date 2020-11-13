@@ -8,7 +8,6 @@
 import Foundation
 
 public enum Category {
-    case ratings
     case menu
     case photos
     case time
@@ -17,16 +16,14 @@ public enum Category {
     // MARK: Computed Properties
     public var title: String {
         switch self {
-            case .ratings:
-                return "Rating:"
             case .menu:
-                return "Menu:"
+                return "menu"
             case .photos:
-                return "Photos:"
+                return "photos"
             case .time:
-                return "Schedule:"
+                return "schedule"
             case .type:
-                return "Type:"
+                return "type"
         }
     }
 }

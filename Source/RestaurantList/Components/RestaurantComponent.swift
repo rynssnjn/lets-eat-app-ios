@@ -9,6 +9,7 @@ import Foundation
 import Cyanic
 import LayoutKit
 import CommonWidgets
+import StarryStars
 
 // sourcery: AutoEquatableComponent,AutoHashableComponent
 // sourcery: Component = RestaurantComponent
@@ -72,32 +73,6 @@ public struct RestaurantComponent: RestaurantComponentType {
 public final class RestaurantComponentLayout: SizeLayout<UIView>, ComponentLayout {
     public init(component: RestaurantComponent) { // swiftlint:disable:this function_body_length
         let commonInset: EdgeInsets = EdgeInsets(top: 0.0, left: 20.0, bottom: 0.0, right: 15.0)
-        let chevronLayout: SizeLayout<ChevronView> = SizeLayout<ChevronView>(
-            width: 15.0,
-            height: 15.0,
-            alignment: Alignment.centerTrailing,
-            flexibility: Flexibility.low,
-            viewReuseId: "\(RestaurantComponentLayout.identifier)Chevron",
-            config: { (view: ChevronView) -> Void in
-                view.direction = component.isExpanded ? ChevronView.Direction.down : ChevronView.Direction.right
-                view.lineWidth = 2.0
-            }
-        )
-
-        let restaurantNameLayout: LabelLayout<UILabel> = LabelLayout(
-            text: Text.unattributed(component.restaurant?.name ?? ""),
-            font: UIFont.boldSystemFont(ofSize: 17.0),
-            lineHeight: 100.0,
-            numberOfLines: 0,
-            alignment: Alignment.center,
-            flexibility: Flexibility.high,
-            viewReuseId: "\(RestaurantComponentLayout.identifier)Name",
-            config: { (view: UILabel) -> Void in
-                view.textAlignment = NSTextAlignment.left
-                view.lineBreakMode = NSLineBreakMode.byCharWrapping
-            }
-        )
-
         let thumbnailImageLayout: SizeLayout<UIImageView> = SizeLayout<UIImageView>(
             width: 50.0,
             height: 50.0,
@@ -112,13 +87,65 @@ public final class RestaurantComponentLayout: SizeLayout<UIView>, ComponentLayou
             }
         )
 
+        let restaurantNameLayout: LabelLayout<UILabel> = LabelLayout(
+            text: Text.unattributed(component.restaurant?.name ?? ""),
+            font: UIFont.boldSystemFont(ofSize: 17.0),
+            lineHeight: 100.0,
+            numberOfLines: 0,
+            alignment: Alignment.centerLeading,
+            flexibility: Flexibility.high,
+            viewReuseId: "\(RestaurantComponentLayout.identifier)Name",
+            config: { (view: UILabel) -> Void in
+                view.textAlignment = NSTextAlignment.left
+                view.lineBreakMode = NSLineBreakMode.byCharWrapping
+            }
+        )
+
+        let starsLayout: SizeLayout<RatingView> = SizeLayout<RatingView>(
+            width: 80,
+            height: 20.0,
+            alignment: Alignment.centerLeading,
+            flexibility: Flexibility.high,
+            viewReuseId: "\(RestaurantComponentLayout.identifier)Stars",
+            config: { (view: RatingView) -> Void in
+                view.editable = false
+                view.onImage = #imageLiteral(resourceName: "filled_star").resize(width: 15.0)
+                view.offImage = #imageLiteral(resourceName: "unfilled_star").resize(width: 15.0)
+                view.halfImage = #imageLiteral(resourceName: "half_star").resize(width: 15.0)
+                view.starCount = 5
+                view.rating = component.restaurant?.ratings.average.rsj.asFloat ?? 0.0
+            }
+        )
+
+        let chevronLayout: SizeLayout<ChevronView> = SizeLayout<ChevronView>(
+            width: 15.0,
+            height: 15.0,
+            alignment: Alignment.centerTrailing,
+            flexibility: Flexibility.low,
+            viewReuseId: "\(RestaurantComponentLayout.identifier)Chevron",
+            config: { (view: ChevronView) -> Void in
+                view.direction = component.isExpanded ? ChevronView.Direction.down : ChevronView.Direction.right
+                view.lineWidth = 2.0
+            }
+        )
+
+        let verticalStackLayout: StackLayout<UIView> = StackLayout<UIView>(
+            axis: Axis.vertical,
+            spacing: 1.0,
+            distribution: StackLayoutDistribution.leading,
+            alignment: Alignment.centerLeading,
+            flexibility: Flexibility.high,
+            sublayouts: [restaurantNameLayout, starsLayout]
+
+        )
+
         let restaurantStackLayout: StackLayout<UIView> = StackLayout<UIView>(
             axis: Axis.horizontal,
             spacing: 20.0,
             distribution: StackLayoutDistribution.trailing,
             alignment: Alignment.fill,
             flexibility: Flexibility.inflexible,
-            sublayouts: [thumbnailImageLayout, restaurantNameLayout]
+            sublayouts: [thumbnailImageLayout, verticalStackLayout]
         )
 
         let horizontalStackLayout: StackLayout<UIView> = StackLayout<UIView>(
@@ -154,7 +181,7 @@ public final class RestaurantComponentLayout: SizeLayout<UIView>, ComponentLayou
             config: nil
         )
 
-        let verticalStackLayout: StackLayout<UIView> = StackLayout<UIView>(
+        let cellStackLayout: StackLayout<UIView> = StackLayout<UIView>(
             axis: Axis.vertical,
             spacing: 0.0,
             alignment: Alignment.fill,
@@ -171,7 +198,7 @@ public final class RestaurantComponentLayout: SizeLayout<UIView>, ComponentLayou
             alignment: Alignment.center,
             flexibility: Flexibility.low,
             viewReuseId: RestaurantComponentLayout.identifier,
-            sublayout: verticalStackLayout,
+            sublayout: cellStackLayout,
             config: nil
         )
     }

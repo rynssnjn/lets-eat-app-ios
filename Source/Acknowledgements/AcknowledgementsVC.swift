@@ -66,7 +66,7 @@ public final class AcknowledgementsVC: MultiSectionTableComponentViewController 
                 sectionController.staticLabelComponent(for: SectionController.SupplementaryView.header) {
                     (component: inout StaticLabelComponent) -> Void in
                     component.id = "Title"
-                    component.text = Text.unattributed("Libraries Used")
+                    component.text = Text.unattributed("disclaimer".localized)
                     component.backgroundColor = UIColor.white
                     component.font = UIFont.boldSystemFont(ofSize: 25.0)
                     component.alignment = Alignment.centerLeading
@@ -81,14 +81,14 @@ public final class AcknowledgementsVC: MultiSectionTableComponentViewController 
                     state.acknowledgements.forEach { (acknowledgement: Acknowledgement) -> Void in
                         let expandable: ExpandableComponent = componentsController
                             .expandableComponent { (component: inout ExpandableComponent) -> Void in
-                            let id: String = "\(acknowledgement.title) title"
+                            let id: String = "\(acknowledgement.title)Title"
                             let isExpanded: Bool = state.expandableDict[id] == true
                             component.id = id
                             component.height = 60.0
                             component.isExpanded = isExpanded
                             component.insets = EdgeInsets(top: 0.0, left: 20.0, bottom: 0.0, right: 15.0)
                             component.setExpandableState = s.viewModel.setExpandableState
-                            component.accessoryViewType = CommonWidgets.ChevronView.self
+                            component.accessoryViewType = ChevronView.self
                             component.accessoryViewSize = CGSize(width: 15.0, height: 15.0)
                             component.dividerLine = DividerLine(
                                 backgroundColor: UIColor.rsj.color(red: 229, green: 229, blue: 234),
@@ -104,20 +104,20 @@ public final class AcknowledgementsVC: MultiSectionTableComponentViewController 
                                 }
                             )
                             component.accessoryViewConfiguration = { (view: UIView) -> Void in
-                                guard let view = view as? CommonWidgets.ChevronView else { return }
+                                guard let view = view as? ChevronView else { return }
                                 view.lineColor = UIColor.blue
                                 switch isExpanded {
                                     case true:
-                                        view.direction = CommonWidgets.ChevronView.Direction.down
+                                        view.direction = ChevronView.Direction.down
                                     case false:
-                                        view.direction = CommonWidgets.ChevronView.Direction.right
+                                        view.direction = ChevronView.Direction.right
                                 }
                             }
                         }
 
                         if expandable.isExpanded {
                             componentsController.staticTextComponent { (component: inout StaticTextComponent) -> Void in
-                                component.id = "\(acknowledgement.title) content"
+                                component.id = "\(acknowledgement.title)Content"
                                 component.text = Text.unattributed(acknowledgement.content)
                                 component.font = UIFont.systemFont(ofSize: 17.0)
                                 component.configuration = { (textView: UITextView) -> Void in
