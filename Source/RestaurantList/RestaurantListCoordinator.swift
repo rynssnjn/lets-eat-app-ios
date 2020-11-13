@@ -52,7 +52,25 @@ extension RestaurantListCoordinator: AcknowledgementsCoordinatorDelegate {}
 
 extension RestaurantListCoordinator: UINavigationControllerDelegate {
     public func navigationController(_ navigationController: UINavigationController, didShow viewController: UIViewController, animated: Bool) { //swiftlint:disable:this line_length
-        // TODO: Add deallocations
+        guard
+            let fromViewController = navigationController.transitionCoordinator?.viewController(
+                forKey: UITransitionContextViewControllerKey.from
+            ),
+            !navigationController.viewControllers.contains(fromViewController),
+            fromViewController is AcknowledgementsVC
+        else {
+            return
+        }
+
+        guard
+            let coordinator = self.childCoordinators.first(where: {
+                $0 is AcknowledgementsCoordinator
+            })
+        else {
+            return
+        }
+
+        self.remove(childCoordinator: coordinator)
         self.navigationController.delegate = self
     }
 }

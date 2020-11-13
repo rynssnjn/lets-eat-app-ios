@@ -53,7 +53,7 @@ public final class RestaurantListVC: MultiSectionTableComponentViewController {
         self.getRestaurants()
 
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(
-            title: "Disclaimer",
+            title: "disclaimer".localized,
             style: UIBarButtonItem.Style.plain,
             target: self,
             action: #selector(RestaurantListVC.librariesItemTapped)
@@ -139,7 +139,7 @@ public final class RestaurantListVC: MultiSectionTableComponentViewController {
                     (component: inout StaticLabelComponent) -> Void in
                     component.id = "Title"
                     component.backgroundColor = UIColor.white
-                    component.text = Text.unattributed("Nearby Restaurants")
+                    component.text = Text.unattributed("nearby_restaurants".localized)
                     component.font = UIFont.boldSystemFont(ofSize: 25.0)
                     component.alignment = Alignment.centerLeading
                     component.configuration = { (view: UILabel) -> Void in
@@ -171,11 +171,13 @@ public final class RestaurantListVC: MultiSectionTableComponentViewController {
                                     component.location = restaurant.location
                                     component.onTap = { print("") }
                                 }
+
                                 componentsController.imageHeaderComponent {
                                     (component: inout ImageHeaderComponent) -> Void in
                                         component.id = "\(restaurant.id)ImageHeader"
                                         component.imageURL = restaurant.featuredImage
                                 }
+
                                 componentsController.buttonComponent {
                                     (component: inout ButtonComponent) -> Void in
                                         component.id = "\(restaurant.id)Address"
@@ -189,24 +191,21 @@ public final class RestaurantListVC: MultiSectionTableComponentViewController {
                                             s.openMaps(location: restaurant.location)
                                         }
                                 }
+
                                 componentsController.categoriesComponent {
                                     (component: inout CategoriesComponent) -> Void in
                                         component.id = "\(restaurant.id)Schedule"
                                         component.category = Category.time
                                         component.text = restaurant.schedule
                                 }
+
                                 componentsController.categoriesComponent {
                                     (component: inout CategoriesComponent) -> Void in
                                         component.id = "\(restaurant.id)Type"
                                         component.category = Category.type
                                         component.text = restaurant.type
                                 }
-                                componentsController.categoriesComponent {
-                                    (component: inout CategoriesComponent) -> Void in
-                                        component.id = "\(restaurant.id)Rating"
-                                        component.category = Category.ratings
-                                        component.ratings = restaurant.ratings
-                                }
+
                                 componentsController.categoriesComponent {
                                     (component: inout CategoriesComponent) -> Void in
                                         component.id = "\(restaurant.id)Menu"
@@ -214,6 +213,7 @@ public final class RestaurantListVC: MultiSectionTableComponentViewController {
                                         component.text = restaurant.menuURL
                                         component.height = 120.0
                                 }
+
                                 componentsController.categoriesComponent {
                                     (component: inout CategoriesComponent) -> Void in
                                         component.id = "\(restaurant.id)Photos"
@@ -226,8 +226,8 @@ public final class RestaurantListVC: MultiSectionTableComponentViewController {
 
                         if state.restaurants.isEmpty == false && state.isLoading == false {
                             componentsController.buttonComponent { (component: inout ButtonComponent) -> Void in
-                                component.id = "BUTTON"
-                                component.title = "Load More"
+                                component.id = "loadMoreButton"
+                                component.title = "load_more".localized
                                 component.onTap = { (_: UIButton) -> Void in
                                     s.getRestaurants()
                                 }

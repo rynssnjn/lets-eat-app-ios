@@ -13,6 +13,7 @@ target 'lets-eat-app-ios' do
   pod 'LayoutKit', :git => 'https://github.com/hooliooo/LayoutKit.git'
   pod 'CommonWidgets', :git => 'git@bitbucket.org:FFUF/ffuf-ios-widgets.git'
   pod 'Kingfisher'
+  pod 'StarryStars'
 end
 
 post_install do |installer|

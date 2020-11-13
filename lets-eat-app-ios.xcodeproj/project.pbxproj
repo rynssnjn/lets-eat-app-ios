@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		8E07878725597AB200D732CE /* LocationComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E07878625597AB200D732CE /* LocationComponent.swift */; };
+		8E0DCA3E255E81F000C17E67 /* UIImageExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E0DCA3D255E81F000C17E67 /* UIImageExtension.swift */; };
+		8E0DCA4B255E8CCF00C17E67 /* .poeditor in Resources */ = {isa = PBXBuildFile; fileRef = 8E0DCA4A255E8CCF00C17E67 /* .poeditor */; };
 		8E1C455B2559310500FDA721 /* ImageCacheManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E1C455A2559310500FDA721 /* ImageCacheManager.swift */; };
 		8E1C455E255938AA00FDA721 /* ImageCacheInjected.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E1C455D255938AA00FDA721 /* ImageCacheInjected.swift */; };
 		8E32677D255715A200399F6E /* Acknowledgements.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8E32677C255715A200399F6E /* Acknowledgements.plist */; };
@@ -22,6 +24,8 @@
 		8E40685C2556CF8F00A8445A /* AutoHashableComponent+Cyanic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E4068592556CF8F00A8445A /* AutoHashableComponent+Cyanic.swift */; };
 		8E40685D2556CF8F00A8445A /* DataSourceControllers+Cyanic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E40685A2556CF8F00A8445A /* DataSourceControllers+Cyanic.swift */; };
 		8E40685E2556CF8F00A8445A /* AutoEquatableComponent+Cyanic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E40685B2556CF8F00A8445A /* AutoEquatableComponent+Cyanic.swift */; };
+		8E45402A255E928D00A5CFD0 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 8E454028255E928D00A5CFD0 /* Localizable.strings */; };
+		8E45402D255E92D400A5CFD0 /* StringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E45402C255E92D400A5CFD0 /* StringExtension.swift */; };
 		8E5330F62556A8D50088B120 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E5330F52556A8D50088B120 /* AppDelegate.swift */; };
 		8E5331022556A8D70088B120 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8E5331012556A8D70088B120 /* Assets.xcassets */; };
 		8E5331052556A8D70088B120 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8E5331032556A8D70088B120 /* LaunchScreen.storyboard */; };
@@ -51,6 +55,8 @@
 		098C6F0F6C803A2DC818BEA3 /* Pods-lets-eat-app-ios.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-lets-eat-app-ios.release.xcconfig"; path = "Target Support Files/Pods-lets-eat-app-ios/Pods-lets-eat-app-ios.release.xcconfig"; sourceTree = "<group>"; };
 		19F096AD387556F7672B2F4F /* Pods-lets-eat-app-ios.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-lets-eat-app-ios.debug.xcconfig"; path = "Target Support Files/Pods-lets-eat-app-ios/Pods-lets-eat-app-ios.debug.xcconfig"; sourceTree = "<group>"; };
 		8E07878625597AB200D732CE /* LocationComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationComponent.swift; sourceTree = "<group>"; };
+		8E0DCA3D255E81F000C17E67 /* UIImageExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImageExtension.swift; sourceTree = "<group>"; };
+		8E0DCA4A255E8CCF00C17E67 /* .poeditor */ = {isa = PBXFileReference; lastKnownFileType = text; path = .poeditor; sourceTree = "<group>"; };
 		8E1C455A2559310500FDA721 /* ImageCacheManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCacheManager.swift; sourceTree = "<group>"; };
 		8E1C455D255938AA00FDA721 /* ImageCacheInjected.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCacheInjected.swift; sourceTree = "<group>"; };
 		8E32677C255715A200399F6E /* Acknowledgements.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Acknowledgements.plist; sourceTree = "<group>"; };
@@ -65,6 +71,9 @@
 		8E4068592556CF8F00A8445A /* AutoHashableComponent+Cyanic.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AutoHashableComponent+Cyanic.swift"; sourceTree = "<group>"; };
 		8E40685A2556CF8F00A8445A /* DataSourceControllers+Cyanic.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DataSourceControllers+Cyanic.swift"; sourceTree = "<group>"; };
 		8E40685B2556CF8F00A8445A /* AutoEquatableComponent+Cyanic.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AutoEquatableComponent+Cyanic.swift"; sourceTree = "<group>"; };
+		8E454029255E928D00A5CFD0 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		8E45402C255E92D400A5CFD0 /* StringExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExtension.swift; sourceTree = "<group>"; };
+		8E454030255E965600A5CFD0 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
 		8E5330F22556A8D50088B120 /* lets-eat-app-ios.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "lets-eat-app-ios.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8E5330F52556A8D50088B120 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8E5331012556A8D70088B120 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -128,6 +137,7 @@
 				8E5331032556A8D70088B120 /* LaunchScreen.storyboard */,
 				8E5331012556A8D70088B120 /* Assets.xcassets */,
 				8E32677C255715A200399F6E /* Acknowledgements.plist */,
+				8E454028255E928D00A5CFD0 /* Localizable.strings */,
 			);
 			path = "Supporting Files";
 			sourceTree = "<group>";
@@ -188,6 +198,7 @@
 		8E5330E92556A8D50088B120 = {
 			isa = PBXGroup;
 			children = (
+				8E0DCA4A255E8CCF00C17E67 /* .poeditor */,
 				8E4067F72556C44C00A8445A /* .sourcery.yml */,
 				8E4067252556B47A00A8445A /* .swiftlint.yml */,
 				8E5330F42556A8D50088B120 /* Source */,
@@ -208,13 +219,13 @@
 		8E5330F42556A8D50088B120 /* Source */ = {
 			isa = PBXGroup;
 			children = (
-				8E83263E2557E83000E26CC0 /* Acknowledgements */,
 				8E8326392557D6B400E26CC0 /* Extensions */,
 				8E4067172556ACBA00A8445A /* Supporting Files */,
 				8E9121462556DA1F004E5D01 /* Utilities */,
 				8E4068582556CF8F00A8445A /* Sourcery */,
 				8E4067122556ABBB00A8445A /* AppControllers */,
 				8E40674E2556B96B00A8445A /* RestaurantList */,
+				8E83263E2557E83000E26CC0 /* Acknowledgements */,
 			);
 			path = Source;
 			sourceTree = "<group>";
@@ -231,6 +242,8 @@
 			isa = PBXGroup;
 			children = (
 				8E83263A2557D6C900E26CC0 /* UIImageViewExtensions.swift */,
+				8E0DCA3D255E81F000C17E67 /* UIImageExtension.swift */,
+				8E45402C255E92D400A5CFD0 /* StringExtension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -388,6 +401,7 @@
 			knownRegions = (
 				en,
 				Base,
+				de,
 			);
 			mainGroup = 8E5330E92556A8D50088B120;
 			productRefGroup = 8E5330F32556A8D50088B120 /* Products */;
@@ -407,8 +421,10 @@
 				8E32677D255715A200399F6E /* Acknowledgements.plist in Resources */,
 				8E4067262556B47A00A8445A /* .swiftlint.yml in Resources */,
 				8E5331052556A8D70088B120 /* LaunchScreen.storyboard in Resources */,
+				8E45402A255E928D00A5CFD0 /* Localizable.strings in Resources */,
 				8E5331022556A8D70088B120 /* Assets.xcassets in Resources */,
 				8E4067F82556C44C00A8445A /* .sourcery.yml in Resources */,
+				8E0DCA4B255E8CCF00C17E67 /* .poeditor in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -486,6 +502,7 @@
 				8E8326492557E8C700E26CC0 /* AcknowledgementsVCDelegate.swift in Sources */,
 				8E8325FC2557C20600E26CC0 /* Location.swift in Sources */,
 				8E1C455E255938AA00FDA721 /* ImageCacheInjected.swift in Sources */,
+				8E45402D255E92D400A5CFD0 /* StringExtension.swift in Sources */,
 				8E83264C2557E95600E26CC0 /* AcknowledgementsVC.swift in Sources */,
 				8E4067F12556BD3900A8445A /* RestaurantListVM.swift in Sources */,
 				8E4067502556B99000A8445A /* RestaurantListCoordinator.swift in Sources */,
@@ -496,6 +513,7 @@
 				8E8326542557EAAE00E26CC0 /* AcknowledgementsVM.swift in Sources */,
 				8E5330F62556A8D50088B120 /* AppDelegate.swift in Sources */,
 				8E4067ED2556BC6B00A8445A /* RestaurantListVCDelegate.swift in Sources */,
+				8E0DCA3E255E81F000C17E67 /* UIImageExtension.swift in Sources */,
 				8E9121582556DEBE004E5D01 /* RestaurantListService.swift in Sources */,
 				8E8326452557E8AB00E26CC0 /* AcknowledgementsCoordinatorDelegate.swift in Sources */,
 				8E8326C82558079500E26CC0 /* CategoriesComponent.swift in Sources */,
@@ -516,6 +534,15 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
+		8E454028255E928D00A5CFD0 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				8E454029255E928D00A5CFD0 /* en */,
+				8E454030255E965600A5CFD0 /* de */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
 		8E5331032556A8D70088B120 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -531,6 +558,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -592,6 +620,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";

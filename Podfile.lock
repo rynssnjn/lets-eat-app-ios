@@ -27,6 +27,7 @@ PODS:
     - RxSwift (~> 5)
   - RxSwift (5.1.1)
   - Sourcery (1.0.0)
+  - StarryStars (1.0.0)
 
 DEPENDENCIES:
   - Astral
@@ -36,6 +37,7 @@ DEPENDENCIES:
   - Kingfisher
   - LayoutKit (from `https://github.com/hooliooo/LayoutKit.git`)
   - RSJ (from `https://github.com/rynssnjn/RSJ.git`)
+  - StarryStars
 
 SPEC REPOS:
   trunk:
@@ -49,6 +51,7 @@ SPEC REPOS:
     - RxRelay
     - RxSwift
     - Sourcery
+    - StarryStars
 
 EXTERNAL SOURCES:
   CommonWidgets:
@@ -90,7 +93,8 @@ SPEC CHECKSUMS:
   RxRelay: d77f7d771495f43c556cbc43eebd1bb54d01e8e9
   RxSwift: 81470a2074fa8780320ea5fe4102807cb7118178
   Sourcery: 928a146ea9b777fa64b0c6ce915c4128b4488cff
+  StarryStars: 1d5bdde3060a6ab5c68c8229506040ee297efceb
 
-PODFILE CHECKSUM: e6576df63bf56ef10f4a48bce94c4e270fa52bf7
+PODFILE CHECKSUM: 01a6997566b2c17b6932c292458ef5aa267007c9
 
 COCOAPODS: 1.10.0
