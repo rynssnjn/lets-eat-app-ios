@@ -72,3 +72,13 @@ public func == (lhs: RestaurantComponent, rhs: RestaurantComponent) -> Bool {
     guard lhs.width == rhs.width else { return false }
     return true
 }
+// MARK: - UserReviewComponent AutoEquatableComponent
+extension UserReviewComponent: Equatable {}
+public func == (lhs: UserReviewComponent, rhs: UserReviewComponent) -> Bool {
+    guard compareOptionals(lhs: lhs.reviewer, rhs: rhs.reviewer, compare: ==) else { return false }
+    guard lhs.rating == rhs.rating else { return false }
+    guard lhs.id == rhs.id else { return false }
+    guard lhs.width == rhs.width else { return false }
+    guard lhs.height == rhs.height else { return false }
+    return true
+}

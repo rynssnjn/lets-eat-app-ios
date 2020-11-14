@@ -1,25 +1,22 @@
 //
-//  SearchRequest.swift
+//  ReviewsRequest.swift
 //  lets-eat-app-ios
 //
-//  Created by Rael San Juan on 11/7/20.
+//  Created by Rael San Juan on 11/15/20.
 //
 
 import Foundation
 import Astral
-import CoreLocation
 
-public struct SearchRequest: Request {
+public struct ReviewsRequest: Request {
 
     // MARK: Initializer
-    public init(page: Int, coordinates: CLLocationCoordinate2D) {
-        self.page = page
-        self.coordinates = coordinates
+    public init(id: Int) {
+        self.id = id
     }
 
     // MARK: Stored Properties
-    private let page: Int
-    private let coordinates: CLLocationCoordinate2D
+    private let id: Int
     public let cachePolicy: URLRequest.CachePolicy? = nil
 
     // MARK: Computed Properties
@@ -33,17 +30,13 @@ public struct SearchRequest: Request {
 
     public var pathComponents: [String] {
         return [
-            "search"
+            "reviews"
         ]
     }
 
     public var parameters: Parameters {
         return Parameters.dict([
-            "count": 20,
-            "lat": self.coordinates.latitude,
-            "lon": self.coordinates.longitude,
-            "sort": "real_distance",
-            "start": self.page
+            "res_id": self.id
         ])
     }
 

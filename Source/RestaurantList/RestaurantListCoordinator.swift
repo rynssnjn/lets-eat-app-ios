@@ -32,6 +32,17 @@ public final class RestaurantListCoordinator: AbstractCoordinator {
 
 // MARK: RestaurantListVCDelegate Methods
 extension RestaurantListCoordinator: RestaurantListVCDelegate {
+    public func goToReviews(restaurant: Restaurant) {
+        let coordinator: ReviewsCoordinator = ReviewsCoordinator(
+            delegate: self,
+            restaurant: restaurant,
+            navigationController: self.navigationController
+        )
+
+        coordinator.start()
+        self.add(childCoordinator: coordinator)
+    }
+
     public func gotToWeb(url: String) {
         let coordinator: RestaurantWebCoordinator = RestaurantWebCoordinator(
             navigationController: self.navigationController,
@@ -77,6 +88,14 @@ extension RestaurantListCoordinator: RestaurantListVCDelegate {
     }
 }
 
+// MARK: ReviewsCoordinatorDelegate Methods
+extension RestaurantListCoordinator: ReviewsCoordinatorDelegate {
+    public func viewProfile(url: String) {
+        self.gotToWeb(url: url)
+    }
+}
+
+// MARK: UINavigationControllerDelegate Methods
 extension RestaurantListCoordinator: UINavigationControllerDelegate {
     public func navigationController(_ navigationController: UINavigationController, didShow viewController: UIViewController, animated: Bool) {
         guard
@@ -85,20 +104,33 @@ extension RestaurantListCoordinator: UINavigationControllerDelegate {
             ),
             !navigationController.viewControllers.contains(fromViewController),
             fromViewController is AcknowledgementsVC ||
-                fromViewController is RestaurantWebVC
+            fromViewController is RestaurantWebVC ||
+            fromViewController is ReviewsVC
         else {
             return
         }
 
         guard
             let coordinator = self.childCoordinators.first(where: {
-                $0 is AcknowledgementsCoordinator || $0 is RestaurantWebCoordinator
+                $0 is AcknowledgementsCoordinator || $0 is RestaurantWebCoordinator ||
+                $0 is ReviewsCoordinator
             })
         else {
             return
         }
 
-        self.remove(childCoordinator: coordinator)
+        switch (fromViewController is RestaurantWebVC, coordinator is ReviewsCoordinator) {
+            case (true, true):
+                guard
+                    let webCoordinator = self.childCoordinators.first(where: { $0 is RestaurantWebCoordinator })
+                else {
+                    return
+                }
+                self.remove(childCoordinator: webCoordinator)
+            default:
+                self.remove(childCoordinator: coordinator)
+        }
+
         self.navigationController.delegate = self
     }
 }

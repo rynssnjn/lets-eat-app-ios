@@ -10,7 +10,6 @@ import RxSwift
 import RxDataSources
 import Cyanic
 import LayoutKit
-import Astral
 import CoreLocation
 import CommonWidgets
 
@@ -57,6 +56,13 @@ public final class RestaurantListVC: MultiSectionTableComponentViewController {
             target: self,
             action: #selector(RestaurantListVC.librariesItemTapped)
         )
+
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(
+            title: "reviews".localized,
+            style: UIBarButtonItem.Style.plain,
+            target: self,
+            action: #selector(RestaurantListVC.reviewButtonItemTapped)
+        )
     }
 
     // MARK: Instance Methods
@@ -86,6 +92,8 @@ public final class RestaurantListVC: MultiSectionTableComponentViewController {
             state.expandableDict[id] = isExpanded
             state.expandableDict.keys.filter { $0 != id }
                 .forEach { state.expandableDict[$0] = false }
+            state.selectedRestaurant = state.expandableDict.values.contains(true)
+                ? state.restaurants.first(where: { $0.id == id }) : nil
         }
     }
 
@@ -101,6 +109,9 @@ public final class RestaurantListVC: MultiSectionTableComponentViewController {
         Cyanic.withState(of: self.viewModel) { [weak self] (state: RestaurantListState) -> Void in
             guard let s = self else { return }
             state.isLoading && state.restaurants.isEmpty ? s.rsj.showActivityIndicator() : s.rsj.hideActivityIndicator()
+            if let reviewButton = s.navigationItem.leftBarButtonItem {
+                reviewButton.isEnabled = state.selectedRestaurant != nil
+            }
         }
     }
 
@@ -220,6 +231,15 @@ public final class RestaurantListVC: MultiSectionTableComponentViewController {
     // MARK: Helper Functions
     @objc func librariesItemTapped() {
         self.delegate.goToAcknowledgements()
+    }
+
+    @objc func reviewButtonItemTapped() {
+        Cyanic.withState(of: self.viewModel) { [weak self] (state: RestaurantListState) -> Void in
+            guard let s = self else { return }
+            if let restaurant = state.selectedRestaurant {
+                s.delegate.goToReviews(restaurant: restaurant)
+            }
+        }
     }
 }
 

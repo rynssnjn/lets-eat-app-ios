@@ -105,6 +105,26 @@ public extension ComponentsController {
         self.add(mutableComponent)
         return mutableComponent
     }
+
+    /**
+        Generates a UserReviewComponent instance and configures its properties with the given closure. You must provide a
+        unique id in the configuration block, otherwise it will force a fatalError.
+        - Parameters:
+            - configuration: The closure that mutates the mutable UserReviewComponent.
+            - mutableComponent: The UserReviewComponent instance to be mutated/configured.
+        - Returns:
+            UserReviewComponent
+    */
+    @discardableResult
+    mutating func userReviewComponent(configuration: (_ mutableComponent: inout UserReviewComponent) -> Void) -> UserReviewComponent {
+        var mutableComponent: UserReviewComponent = UserReviewComponent(id: CyanicConstants.invalidID)
+        configuration(&mutableComponent)
+        mutableComponent.width = self.width
+        guard ComponentStateValidator.hasValidIdentifier(mutableComponent)
+            else { fatalError("You must have a unique identifier for this component") }
+        self.add(mutableComponent)
+        return mutableComponent
+    }
 }
 
 public extension SectionController {
@@ -229,6 +249,33 @@ public extension SectionController {
     @discardableResult
     mutating func restaurantComponent(for supplementaryView: SectionController.SupplementaryView, configuration: (_ mutableComponent: inout RestaurantComponent) -> Void) -> RestaurantComponent {
         var mutableComponent: RestaurantComponent = RestaurantComponent(id: CyanicConstants.invalidID)
+        configuration(&mutableComponent)
+        mutableComponent.width = self.width
+        guard ComponentStateValidator.hasValidIdentifier(mutableComponent)
+            else { fatalError("You must have a unique identifier for this component") }
+
+        switch supplementaryView {
+            case .header:
+                self.headerComponent = mutableComponent.asAnyComponent
+            case .footer:
+                self.footerComponent = mutableComponent.asAnyComponent
+        }
+
+        return mutableComponent
+    }
+
+    /**
+        Generates a UserReviewComponent instance and configures its properties with the given closure. You must provide a
+        unique id in the configuration block, otherwise it will force a fatalError.
+        - Parameters:
+            - configuration: The closure that mutates the mutable UserReviewComponent.
+            - mutableComponent: The UserReviewComponent instance to be mutated/configured.
+        - Returns:
+            UserReviewComponent
+    */
+    @discardableResult
+    mutating func userReviewComponent(for supplementaryView: SectionController.SupplementaryView, configuration: (_ mutableComponent: inout UserReviewComponent) -> Void) -> UserReviewComponent {
+        var mutableComponent: UserReviewComponent = UserReviewComponent(id: CyanicConstants.invalidID)
         configuration(&mutableComponent)
         mutableComponent.width = self.width
         guard ComponentStateValidator.hasValidIdentifier(mutableComponent)

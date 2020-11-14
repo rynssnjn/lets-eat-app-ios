@@ -13,7 +13,7 @@ import CoreLocation
 
 public struct RestaurantListService: AbstractAPIService {
 
-    public func getRestaurants(page: Int, coordinates: CLLocationCoordinate2D) -> Future<Restaurants, NetworkingError> {
+    public func getRestaurants(page: Int, coordinates: CLLocationCoordinate2D) -> Future<SearchResponse, NetworkingError> {
         let request: Request = SearchRequest(page: page, coordinates: coordinates)
 
         return self.transform(request: request)
