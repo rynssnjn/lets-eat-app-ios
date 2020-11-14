@@ -50,14 +50,14 @@ public final class RestaurantListVC: MultiSectionTableComponentViewController {
         self.locationManager.desiredAccuracy = kCLLocationAccuracyBest
         self.checkLocationAuthorization()
 
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(
             title: "disclaimer".localized,
             style: UIBarButtonItem.Style.plain,
             target: self,
             action: #selector(RestaurantListVC.librariesItemTapped)
         )
 
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem(
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(
             title: "reviews".localized,
             style: UIBarButtonItem.Style.plain,
             target: self,
@@ -109,7 +109,7 @@ public final class RestaurantListVC: MultiSectionTableComponentViewController {
         Cyanic.withState(of: self.viewModel) { [weak self] (state: RestaurantListState) -> Void in
             guard let s = self else { return }
             state.isLoading && state.restaurants.isEmpty ? s.rsj.showActivityIndicator() : s.rsj.hideActivityIndicator()
-            if let reviewButton = s.navigationItem.leftBarButtonItem {
+            if let reviewButton = s.navigationItem.rightBarButtonItem {
                 reviewButton.isEnabled = state.selectedRestaurant != nil
             }
         }

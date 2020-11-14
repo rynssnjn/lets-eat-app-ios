@@ -12,7 +12,7 @@ import Astral
 public final class ReviewsCoordinator: AbstractCoordinator {
 
     // MARK: Delegate Properties
-    private unowned let delegate : ReviewsCoordinatorDelegate
+    private unowned let delegate: ReviewsCoordinatorDelegate
 
     // MARK: Initializer
     public init(delegate: ReviewsCoordinatorDelegate, restaurant: Restaurant, navigationController: UINavigationController) {
