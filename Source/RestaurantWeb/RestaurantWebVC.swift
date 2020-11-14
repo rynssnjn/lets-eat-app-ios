@@ -30,9 +30,9 @@ public final class RestaurantWebVC: RSJViewController {
 
     // MARK: LifeCycle Methods
     public override func loadView() {
-        let config: WKWebViewConfiguration = WKWebViewConfiguration()
-        config.dataDetectorTypes = WKDataDetectorTypes.all
-        self.view = WKWebView(frame: CGRect.zero, configuration: config)
+        let configuration: WKWebViewConfiguration = WKWebViewConfiguration()
+        configuration.dataDetectorTypes = WKDataDetectorTypes.all
+        self.view = WKWebView(frame: CGRect.zero, configuration: configuration)
     }
 
     public override func viewDidLoad() {

@@ -52,3 +52,13 @@ extension RestaurantComponent: Hashable {
         self.width.hash(into: &hasher)
     }
 }
+// MARK: - UserReviewComponent AutoHashableComponent
+extension UserReviewComponent: Hashable {
+    public func hash(into hasher: inout Hasher) {
+        self.reviewer.hash(into: &hasher)
+        self.rating.hash(into: &hasher)
+        self.id.hash(into: &hasher)
+        self.width.hash(into: &hasher)
+        self.height.hash(into: &hasher)
+    }
+}
