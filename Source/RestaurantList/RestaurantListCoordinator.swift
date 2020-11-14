@@ -9,6 +9,7 @@ import Foundation
 import RSJ
 import UIKit
 import CoreLocation
+import MapKit
 
 public final class RestaurantListCoordinator: AbstractCoordinator {
 
@@ -31,14 +32,43 @@ public final class RestaurantListCoordinator: AbstractCoordinator {
 
 // MARK: RestaurantListVCDelegate Methods
 extension RestaurantListCoordinator: RestaurantListVCDelegate {
-    public func openMaps(coordinates: CLLocationCoordinate2D) {
-        print("LATITUDE: \(coordinates.latitude)")
-        print("LONGITUDE: \(coordinates.longitude)")
+    public func gotToWeb(url: String) {
+        let coordinator: RestaurantWebCoordinator = RestaurantWebCoordinator(
+            navigationController: self.navigationController,
+            url: url
+        )
+
+        coordinator.start()
+        self.add(childCoordinator: coordinator)
+    }
+
+    public func openMaps(restaurant: Restaurant) {
+        guard
+            let latitude = restaurant.location.latitude.rsj.asCGFloat,
+            let longitude = restaurant.location.longitude.rsj.asCGFloat
+        else {
+            return
+        }
+
+        let coordinates: CLLocationCoordinate2D = CLLocationCoordinate2D(
+            latitude: CLLocationDegrees(latitude),
+            longitude: CLLocationDegrees(longitude)
+        )
+
+        let mapItem: MKMapItem = MKMapItem(
+            placemark: MKPlacemark(
+                coordinate: coordinates,
+                addressDictionary: nil
+            )
+        )
+
+        mapItem.name = restaurant.name
+        mapItem.phoneNumber = restaurant.phoneNumber
+        mapItem.openInMaps(launchOptions: nil)
     }
 
     public func goToAcknowledgements() {
         let coordinator: AcknowledgementsCoordinator = AcknowledgementsCoordinator(
-            delegate: self,
             navigationController: self.navigationController
         )
 
@@ -47,24 +77,22 @@ extension RestaurantListCoordinator: RestaurantListVCDelegate {
     }
 }
 
-// MARK: AcknowledgementsCoordinatorDelegate Methods
-extension RestaurantListCoordinator: AcknowledgementsCoordinatorDelegate {}
-
 extension RestaurantListCoordinator: UINavigationControllerDelegate {
-    public func navigationController(_ navigationController: UINavigationController, didShow viewController: UIViewController, animated: Bool) { //swiftlint:disable:this line_length
+    public func navigationController(_ navigationController: UINavigationController, didShow viewController: UIViewController, animated: Bool) {
         guard
             let fromViewController = navigationController.transitionCoordinator?.viewController(
                 forKey: UITransitionContextViewControllerKey.from
             ),
             !navigationController.viewControllers.contains(fromViewController),
-            fromViewController is AcknowledgementsVC
+            fromViewController is AcknowledgementsVC ||
+                fromViewController is RestaurantWebVC
         else {
             return
         }
 
         guard
             let coordinator = self.childCoordinators.first(where: {
-                $0 is AcknowledgementsCoordinator
+                $0 is AcknowledgementsCoordinator || $0 is RestaurantWebCoordinator
             })
         else {
             return

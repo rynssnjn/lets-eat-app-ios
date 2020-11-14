@@ -54,7 +54,7 @@ public struct RestaurantComponent: RestaurantComponentType {
     public var restaurant: Restaurant?
 
     // sourcery: skipHashing, skipEquality
-    public var setExpandableState: (String, Bool) -> Void = { (_: String, _: Bool) -> Void in fatalError("This default closure must be replaced!") }
+    public var setExpandableState: (String, Bool) -> Void = { (_: String, _: Bool) -> Void in fatalError("This default closure must be replaced!") } // swiftlint:disable:this line_length
 
     public var isExpanded: Bool = false
 
