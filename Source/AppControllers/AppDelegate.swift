@@ -16,10 +16,17 @@ class AppDelegate: UIResponder {
        window: self.window!,
        rootViewController: self.rootViewController
     )
+
+    private func setupAppearance() {
+        if let window = self.window, #available(iOS 13.0, *) {
+            window.overrideUserInterfaceStyle = UIUserInterfaceStyle.light
+        }
+    }
 }
 
 extension AppDelegate: UIApplicationDelegate {
     public func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool { //swiftlint:disable:this colon
+        self.setupAppearance()
         self.parentCoordinator.start()
         return true
     }
