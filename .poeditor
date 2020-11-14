@@ -1,0 +1,9 @@
+[main]
+apiKey = 64166868afbf302d65e3d7e6b19bf45d
+
+[project.letseat]
+project_id = 389305
+type = apple_strings
+
+#Translations
+trans.en = Source/Supporting Files/en.lproj/Localizable.strings

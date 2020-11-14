@@ -10,12 +10,8 @@ import RSJ
 
 public final class AcknowledgementsCoordinator: AbstractCoordinator {
 
-    // MARK: Delegate Properties
-    private unowned let delegate: AcknowledgementsCoordinatorDelegate
-
     // MARK: Initializer
-    public init(delegate: AcknowledgementsCoordinatorDelegate, navigationController: UINavigationController) {
-        self.delegate = delegate
+    public init(navigationController: UINavigationController) {
         self.navigationController = navigationController
         super.init()
     }
@@ -62,4 +58,8 @@ public final class AcknowledgementsCoordinator: AbstractCoordinator {
 }
 
 // MARK: AcknowledgementsVCDelegate Methods
-extension AcknowledgementsCoordinator: AcknowledgementsVCDelegate {}
+extension AcknowledgementsCoordinator: AcknowledgementsVCDelegate {
+    public func backButtonItemTapped() {
+        self.navigationController.popViewController(animated: true)
+    }
+}

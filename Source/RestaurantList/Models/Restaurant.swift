@@ -26,6 +26,7 @@ public struct Restaurant: Decodable, Hashable {
         case schedule = "timings"
         case type = "cuisines"
         case highlights
+        case phoneNumber = "phone_numbers"
     }
 
     // MARK: Initializer
@@ -46,6 +47,7 @@ public struct Restaurant: Decodable, Hashable {
         self.schedule = try restaurant.decode(String.self, forKey: RestaurantKeys.schedule)
         self.type = try restaurant.decode(String.self, forKey: RestaurantKeys.type)
         self.highlights = try restaurant.decode([String].self, forKey: RestaurantKeys.highlights)
+        self.phoneNumber = try restaurant.decode(String.self, forKey: RestaurantKeys.phoneNumber)
     }
 
     // MARK: Stored Properties
@@ -60,4 +62,5 @@ public struct Restaurant: Decodable, Hashable {
     public let schedule: String
     public let type: String
     public let highlights: [String]
+    public let phoneNumber: String
 }

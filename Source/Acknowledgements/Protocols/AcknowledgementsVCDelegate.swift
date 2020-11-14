@@ -7,4 +7,8 @@
 
 import Foundation
 
-public protocol AcknowledgementsVCDelegate: class {}
+public protocol AcknowledgementsVCDelegate: class {
+
+    func backButtonItemTapped()
+
+}

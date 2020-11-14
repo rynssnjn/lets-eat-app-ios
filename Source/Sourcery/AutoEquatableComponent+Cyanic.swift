@@ -43,6 +43,25 @@ public func == (lhs: ImageHeaderComponent, rhs: ImageHeaderComponent) -> Bool {
     guard lhs.width == rhs.width else { return false }
     return true
 }
+// MARK: - LocationComponent AutoEquatableComponent
+extension LocationComponent: Equatable {}
+public func == (lhs: LocationComponent, rhs: LocationComponent) -> Bool {
+    guard lhs.height == rhs.height else { return false }
+    guard compareOptionals(lhs: lhs.location, rhs: rhs.location, compare: ==) else { return false }
+    guard lhs.id == rhs.id else { return false }
+    guard lhs.width == rhs.width else { return false }
+    return true
+}
+// MARK: - MenuPhotosComponent AutoEquatableComponent
+extension MenuPhotosComponent: Equatable {}
+public func == (lhs: MenuPhotosComponent, rhs: MenuPhotosComponent) -> Bool {
+    guard lhs.menuURL == rhs.menuURL else { return false }
+    guard lhs.photoURL == rhs.photoURL else { return false }
+    guard lhs.id == rhs.id else { return false }
+    guard lhs.width == rhs.width else { return false }
+    guard lhs.height == rhs.height else { return false }
+    return true
+}
 // MARK: - RestaurantComponent AutoEquatableComponent
 extension RestaurantComponent: Equatable {}
 public func == (lhs: RestaurantComponent, rhs: RestaurantComponent) -> Bool {

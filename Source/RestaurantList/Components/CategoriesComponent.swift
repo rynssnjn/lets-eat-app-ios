@@ -17,7 +17,7 @@ public protocol CategoriesComponentType: StaticHeightComponent {
     // sourcery: defaultValue = """"
     var text: String { get set }
 
-    // sourcery: defaultValue = "Category.ratings"
+    // sourcery: defaultValue = "Category.time"
     var category: Category { get set }
 
     var ratings: Ratings? { get set }
@@ -38,7 +38,7 @@ public struct CategoriesComponent: CategoriesComponentType {
 
     public var text: String = ""
 
-    public var category: Category = Category.ratings
+    public var category: Category = Category.time
 
     public var ratings: Ratings?
 
@@ -56,20 +56,14 @@ public struct CategoriesComponent: CategoriesComponentType {
 }
 
 public final class CategoriesComponentLayout: SizeLayout<UIView>, ComponentLayout {
-    public init(component: CategoriesComponent) { // swiftlint:disable:this function_body_length
-        let isNotURL: Bool = component.category != Category.menu && component.category != Category.photos
-        let insets: EdgeInsets = EdgeInsets(
-            top: isNotURL ? 0.0 : 10.0,
-            left: 20.0,
-            bottom: isNotURL ? 0.0 : 10.0,
-            right: 15.0
-        )
+    public init(component: CategoriesComponent) {
+        let insets: EdgeInsets = EdgeInsets(top: 0.0, left: 20.0, bottom: 0.0, right: 15.0)
 
         let titleLayout: LabelLayout<UILabel> = LabelLayout(
-            text: Text.unattributed(component.category.title),
+            text: Text.unattributed("\(component.category.title.localized):"),
             font: UIFont.systemFont(ofSize: 17.0),
             numberOfLines: 0,
-            alignment: isNotURL ? Alignment.center : Alignment.fillLeading,
+            alignment: Alignment.center,
             flexibility: Flexibility.high,
             viewReuseId: "\(CategoriesComponentLayout.identifier)Category",
             config: { (view: UILabel) -> Void in
@@ -78,41 +72,13 @@ public final class CategoriesComponentLayout: SizeLayout<UIView>, ComponentLayou
             }
         )
 
-        let valueLayout: Layout = isNotURL
-            ? LabelLayout(
-                text: Text.unattributed(component.category == Category.ratings
-                    ? component.ratings?.averageText ?? ""
-                    : component.text
-                ),
-                font: UIFont.boldSystemFont(ofSize: 17.0),
-                alignment: Alignment.center,
-                flexibility: Flexibility.high,
-                viewReuseId: "\(CategoriesComponentLayout.identifier)LabelValue",
-                config: { (view: UILabel) -> Void in
-                    if component.category == Category.ratings {
-                        guard let ratings = component.ratings else { return }
-                        view.textColor = UIColor.rsj.color(hexValue: ratings.color)
-                    } else {
-                        view.textColor = UIColor.black
-                    }
-                    view.textAlignment = NSTextAlignment.right
-                }
-        ) : TextViewLayout(
-                text: Text.unattributed(component.text),
-                font: UIFont.systemFont(ofSize: 17.0),
-                layoutAlignment: Alignment.center,
-                flexibility: Flexibility.high,
-                viewReuseId: "\(CategoriesComponentLayout.identifier)TextValue",
-                config: { (view: UITextView) -> Void in
-                    view.textColor = UIColor.black
-                    view.isEditable = false
-                    view.dataDetectorTypes = UIDataDetectorTypes.all
-                    view.linkTextAttributes = [
-                        NSAttributedString.Key.foregroundColor: UIColor.blue,
-                        NSAttributedString.Key.underlineStyle: 1,
-                        NSAttributedString.Key.underlineColor: UIColor.blue
-                    ]
-                }
+        let valueLayout: LabelLayout<UILabel> = LabelLayout(
+            text: Text.unattributed(component.text),
+            font: UIFont.boldSystemFont(ofSize: 17.0),
+            alignment: Alignment.centerTrailing,
+            flexibility: Flexibility.high,
+            viewReuseId: "\(CategoriesComponentLayout.identifier)LabelValue",
+            config: nil
         )
 
         let horizontalStackLayout: StackLayout<UIView> = StackLayout<UIView>(
@@ -124,19 +90,10 @@ public final class CategoriesComponentLayout: SizeLayout<UIView>, ComponentLayou
             sublayouts: [titleLayout, valueLayout]
         )
 
-        let verticalStackLayout: StackLayout<UIView> = StackLayout<UIView>(
-            axis: Axis.vertical,
-            spacing: 1.0,
-            distribution: StackLayoutDistribution.fillFlexing,
-            alignment: Alignment.fill,
-            flexibility: Flexibility.low,
-            sublayouts: [titleLayout, valueLayout]
-        )
-
         let insetLayout: InsetLayout<UIView> = InsetLayout<UIView>(
             insets: insets,
             alignment: Alignment.fill,
-            sublayout: isNotURL ? horizontalStackLayout : verticalStackLayout,
+            sublayout: horizontalStackLayout,
             config: nil
         )
 

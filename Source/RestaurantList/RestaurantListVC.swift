@@ -17,7 +17,7 @@ import CommonWidgets
 public final class RestaurantListVC: MultiSectionTableComponentViewController {
 
     // MARK: Delegate Properties
-    private unowned var delegate: RestaurantListVCDelegate
+    private unowned let delegate: RestaurantListVCDelegate
 
     // MARK: Initializers
     public init(delegate: RestaurantListVCDelegate) {
@@ -50,10 +50,9 @@ public final class RestaurantListVC: MultiSectionTableComponentViewController {
         self.locationManager.delegate = self
         self.locationManager.desiredAccuracy = kCLLocationAccuracyBest
         self.checkLocationAuthorization()
-        self.getRestaurants()
 
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(
-            title: "Disclaimer",
+            title: "disclaimer".localized,
             style: UIBarButtonItem.Style.plain,
             target: self,
             action: #selector(RestaurantListVC.librariesItemTapped)
@@ -91,26 +90,11 @@ public final class RestaurantListVC: MultiSectionTableComponentViewController {
     }
 
     private func getRestaurants() {
-        Cyanic.withState(of: self.viewModel) { [weak self] (state: RestaurantListState) -> Void in
-            guard let s = self else { return }
-            s.viewModel.getRestaurants(page: state.currentPage)
-        }
+        self.viewModel.getRestaurants()
     }
 
-    private func openMaps(location: Location) {
-        guard
-            let latitude = location.latitude.rsj.asCGFloat,
-            let longitude = location.longitude.rsj.asCGFloat
-        else {
-            return
-        }
-
-        let coordinates: CLLocationCoordinate2D = CLLocationCoordinate2D(
-            latitude: CLLocationDegrees(latitude),
-            longitude: CLLocationDegrees(longitude)
-        )
-
-        self.delegate.openMaps(coordinates: coordinates)
+    private func openMaps(restaurant: Restaurant) {
+        self.delegate.openMaps(restaurant: restaurant)
     }
 
     public override func invalidate() {
@@ -139,7 +123,7 @@ public final class RestaurantListVC: MultiSectionTableComponentViewController {
                     (component: inout StaticLabelComponent) -> Void in
                     component.id = "Title"
                     component.backgroundColor = UIColor.white
-                    component.text = Text.unattributed("Nearby Restaurants")
+                    component.text = Text.unattributed("nearby_restaurants".localized)
                     component.font = UIFont.boldSystemFont(ofSize: 25.0)
                     component.alignment = Alignment.centerLeading
                     component.configuration = { (view: UILabel) -> Void in
@@ -147,15 +131,15 @@ public final class RestaurantListVC: MultiSectionTableComponentViewController {
                     }
                     component.insets = EdgeInsets(top: 30.0, left: 20.0, bottom: 30.0, right: 15.0)
                 }
-                sectionController.buildComponents { [weak self]
-                    (componentsController: inout ComponentsController) -> Void in
+                sectionController.buildComponents { [weak self] (componentsController: inout ComponentsController) -> Void in
                         let insets: EdgeInsets = EdgeInsets(top: 0.0, left: 20.0, bottom: 0.0, right: 15.0)
                         guard let s = self else { return }
 
                         state.restaurants.forEach { (restaurant: Restaurant) -> Void in
+                            let restaurantId: String = restaurant.id
                             let restaurantComponent: RestaurantComponent = componentsController
                                 .restaurantComponent { (component: inout RestaurantComponent) -> Void in
-                                    let id: String = restaurant.id
+                                    let id: String = restaurantId
                                     let isExpanded: Bool = state.expandableDict[id] == true
                                     component.id = id
                                     component.isExpanded = isExpanded
@@ -166,63 +150,63 @@ public final class RestaurantListVC: MultiSectionTableComponentViewController {
                             }
 
                             if restaurantComponent.isExpanded {
-                                componentsController.imageHeaderComponent {
-                                    (component: inout ImageHeaderComponent) -> Void in
-                                        component.id = "\(restaurant.id)ImageHeader"
-                                        component.imageURL = restaurant.featuredImage
+                                componentsController.locationComponent { (component: inout LocationComponent) -> Void in
+                                    component.id = "\(restaurantId)Location"
+                                    component.location = restaurant.location
+                                    component.onTap = { () -> Void in
+                                        s.openMaps(restaurant: restaurant)
+                                    }
                                 }
-                                componentsController.buttonComponent {
-                                    (component: inout ButtonComponent) -> Void in
-                                        component.id = "\(restaurant.id)Address"
-                                        component.title = restaurant.location.address
-                                        component.height = 60.0
-                                        component.insets = insets
-                                        component.configuration = { (view: UIButton) -> Void in
-                                            view.titleLabel?.numberOfLines = 0
-                                        }
-                                        component.onTap = { (_: UIButton) -> Void in
-                                            s.openMaps(location: restaurant.location)
-                                        }
+
+                                componentsController.buttonComponent { (component: inout ButtonComponent) -> Void in
+                                    component.id = "\(restaurantId)Address"
+                                    component.title = restaurant.location.address
+                                    component.height = 60.0
+                                    component.insets = insets
+                                    component.configuration = { (view: UIButton) -> Void in
+                                        view.titleLabel?.numberOfLines = 0
+                                    }
+                                    component.onTap = { (_: UIButton) -> Void in
+                                        s.openMaps(restaurant: restaurant)
+                                    }
                                 }
-                                componentsController.categoriesComponent {
-                                    (component: inout CategoriesComponent) -> Void in
-                                        component.id = "\(restaurant.id)Schedule"
-                                        component.category = Category.time
-                                        component.text = restaurant.schedule
+
+                                componentsController.imageHeaderComponent { (component: inout ImageHeaderComponent) -> Void in
+                                    component.id = "\(restaurantId)ImageHeader"
+                                    component.imageURL = restaurant.featuredImage
                                 }
-                                componentsController.categoriesComponent {
-                                    (component: inout CategoriesComponent) -> Void in
-                                        component.id = "\(restaurant.id)Type"
-                                        component.category = Category.type
-                                        component.text = restaurant.type
+
+                                componentsController.categoriesComponent { (component: inout CategoriesComponent) -> Void in
+                                    component.id = "\(restaurantId)Schedule"
+                                    component.category = Category.time
+                                    component.text = restaurant.schedule
                                 }
-                                componentsController.categoriesComponent {
-                                    (component: inout CategoriesComponent) -> Void in
-                                        component.id = "\(restaurant.id)Rating"
-                                        component.category = Category.ratings
-                                        component.ratings = restaurant.ratings
+
+                                componentsController.categoriesComponent { (component: inout CategoriesComponent) -> Void in
+                                    component.id = "\(restaurantId)Type"
+                                    component.category = Category.type
+                                    component.text = restaurant.type
                                 }
-                                componentsController.categoriesComponent {
-                                    (component: inout CategoriesComponent) -> Void in
-                                        component.id = "\(restaurant.id)Menu"
-                                        component.category = Category.menu
-                                        component.text = restaurant.menuURL
-                                        component.height = 120.0
-                                }
-                                componentsController.categoriesComponent {
-                                    (component: inout CategoriesComponent) -> Void in
-                                        component.id = "\(restaurant.id)Photos"
-                                        component.category = Category.photos
-                                        component.text = restaurant.photosURL
-                                        component.height = 120.0
+
+                                componentsController.menuPhotosComponent { (component: inout MenuPhotosComponent) -> Void in
+                                    component.id = "\(restaurantId)Buttons"
+                                    component.height = 60.0
+                                    component.onMenuButtonTapped = { [weak self] () -> Void in
+                                        guard let s = self else { return }
+                                        s.delegate.gotToWeb(url: restaurant.menuURL)
+                                    }
+                                    component.onPhotosButtonTapped = { [weak self] () -> Void in
+                                        guard let s = self else { return }
+                                        s.delegate.gotToWeb(url: restaurant.photosURL)
+                                    }
                                 }
                             }
                         }
 
                         if state.restaurants.isEmpty == false && state.isLoading == false {
                             componentsController.buttonComponent { (component: inout ButtonComponent) -> Void in
-                                component.id = "BUTTON"
-                                component.title = "Load More"
+                                component.id = "loadMoreButton"
+                                component.title = "load_more".localized
                                 component.onTap = { (_: UIButton) -> Void in
                                     s.getRestaurants()
                                 }
@@ -243,8 +227,11 @@ public final class RestaurantListVC: MultiSectionTableComponentViewController {
 extension RestaurantListVC: CLLocationManagerDelegate {
     public func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         if !locations.isEmpty {
-            self.viewModel.setState { (state: inout RestaurantListState) -> Void in
-                state.currentLocation = locations.first
+            Cyanic.withState(of: self.viewModel) { [weak self] (state: RestaurantListState) -> Void in
+                guard let s = self else { return }
+                if let location = locations.first, state.currentLocation == nil {
+                    s.viewModel.set(currentLocation: location)
+                }
             }
         }
     }
