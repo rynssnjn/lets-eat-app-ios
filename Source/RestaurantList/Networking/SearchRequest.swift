@@ -7,16 +7,19 @@
 
 import Foundation
 import Astral
+import CoreLocation
 
 public struct SearchRequest: Request {
 
     // MARK: Initializer
-    public init(page: Int) {
+    public init(page: Int, coordinates: CLLocationCoordinate2D) {
         self.page = page
+        self.coordinates = coordinates
     }
 
     // MARK: Stored Properties
     private let page: Int
+    private let coordinates: CLLocationCoordinate2D
 
     // MARK: Computed Properties
     public var configuration: RequestConfiguration {
@@ -36,8 +39,8 @@ public struct SearchRequest: Request {
     public var parameters: Parameters {
         return Parameters.dict([
             "count": 20,
-            "lat": 14.559800,
-            "lon": 121.014500,
+            "lat": self.coordinates.latitude,
+            "lon": self.coordinates.longitude,
             "sort": "real_distance",
             "start": self.page
         ])

@@ -1,7 +1,8 @@
-"menu" = "Menu";
-"photos" = "Photos";
 "schedule" = "Schedule";
 "type" = "Type";
 "disclaimer" = "Legal Notice";
 "nearby_restaurants" = "Nearby Restaurants";
 "load_more" = "Load More";
+"view_menu" = "Open Menu";
+"view_photos" = "Open Photos";
+"back" = "Back";

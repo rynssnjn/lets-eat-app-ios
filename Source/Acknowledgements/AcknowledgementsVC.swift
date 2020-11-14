@@ -46,6 +46,12 @@ public final class AcknowledgementsVC: MultiSectionTableComponentViewController 
     public override func viewDidLoad() {
         super.viewDidLoad()
         self.tableView.separatorStyle = UITableViewCell.SeparatorStyle.none
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(
+            title: "back".localized,
+            style: UIBarButtonItem.Style.plain,
+            target: self,
+            action: #selector(AcknowledgementsVC.backButtonItemTapped)
+        )
     }
 
     // MARK: Instance Methods
@@ -60,7 +66,7 @@ public final class AcknowledgementsVC: MultiSectionTableComponentViewController 
         return dataSource
     }
 
-    public override func buildSections(_ sectionsController: inout MultiSectionController) { // swiftlint:disable:this function_body_length line_length
+    public override func buildSections(_ sectionsController: inout MultiSectionController) { // swiftlint:disable:this function_body_length
         Cyanic.withState(of: self.viewModel) { (state: AcknowledgementsState) -> Void in
             sectionsController.sectionController { (sectionController: inout SectionController) -> Void in
                 sectionController.staticLabelComponent(for: SectionController.SupplementaryView.header) {
@@ -75,44 +81,46 @@ public final class AcknowledgementsVC: MultiSectionTableComponentViewController 
                     }
                     component.insets = EdgeInsets(top: 30.0, left: 20.0, bottom: 30.0, right: 15.0)
                 }
-                sectionController.buildComponents { [weak self]
-                    (componentsController: inout ComponentsController) -> Void in
+
+                sectionController.buildComponents { [weak self] (componentsController: inout ComponentsController) -> Void in
                     guard let s = self else { return }
                     state.acknowledgements.forEach { (acknowledgement: Acknowledgement) -> Void in
                         let expandable: ExpandableComponent = componentsController
                             .expandableComponent { (component: inout ExpandableComponent) -> Void in
-                            let id: String = "\(acknowledgement.title)Title"
-                            let isExpanded: Bool = state.expandableDict[id] == true
-                            component.id = id
-                            component.height = 60.0
-                            component.isExpanded = isExpanded
-                            component.insets = EdgeInsets(top: 0.0, left: 20.0, bottom: 0.0, right: 15.0)
-                            component.setExpandableState = s.viewModel.setExpandableState
-                            component.accessoryViewType = ChevronView.self
-                            component.accessoryViewSize = CGSize(width: 15.0, height: 15.0)
-                            component.dividerLine = DividerLine(
-                                backgroundColor: UIColor.rsj.color(red: 229, green: 229, blue: 234),
-                                insets: EdgeInsets(top: 0.0, left: 20.0, bottom: 0.0, right: 0.0),
-                                height: 1.0
-                            )
-                            component.contentLayout = LabelContentLayout(
-                                text: Text.unattributed(acknowledgement.title),
-                                font: UIFont.boldSystemFont(ofSize: 17.0),
-                                alignment: Alignment.centerLeading,
-                                configuration: { (label: UILabel) -> Void in
-                                    label.textColor = UIColor.black
+                                let id: String = "\(acknowledgement.title)Title"
+                                let isExpanded: Bool = state.expandableDict[id] == true
+                                component.id = id
+                                component.height = 60.0
+                                component.isExpanded = isExpanded
+                                component.insets = EdgeInsets(top: 0.0, left: 20.0, bottom: 0.0, right: 15.0)
+                                component.setExpandableState = s.viewModel.setExpandableState
+                                component.accessoryViewType = ChevronView.self
+                                component.accessoryViewSize = CGSize(width: 15.0, height: 15.0)
+                                component.dividerLine = DividerLine(
+                                    backgroundColor: UIColor.rsj.color(red: 229, green: 229, blue: 234),
+                                    insets: EdgeInsets(top: 0.0, left: 20.0, bottom: 0.0, right: 0.0),
+                                    height: 1.0
+                                )
+
+                                component.contentLayout = LabelContentLayout(
+                                    text: Text.unattributed(acknowledgement.title),
+                                    font: UIFont.boldSystemFont(ofSize: 17.0),
+                                    alignment: Alignment.centerLeading,
+                                    configuration: { (label: UILabel) -> Void in
+                                        label.textColor = UIColor.black
+                                    }
+                                )
+
+                                component.accessoryViewConfiguration = { (view: UIView) -> Void in
+                                    guard let view = view as? ChevronView else { return }
+                                    view.lineColor = UIColor.blue
+                                    switch isExpanded {
+                                        case true:
+                                            view.direction = ChevronView.Direction.down
+                                        case false:
+                                            view.direction = ChevronView.Direction.right
+                                    }
                                 }
-                            )
-                            component.accessoryViewConfiguration = { (view: UIView) -> Void in
-                                guard let view = view as? ChevronView else { return }
-                                view.lineColor = UIColor.blue
-                                switch isExpanded {
-                                    case true:
-                                        view.direction = ChevronView.Direction.down
-                                    case false:
-                                        view.direction = ChevronView.Direction.right
-                                }
-                            }
                         }
 
                         if expandable.isExpanded {
@@ -137,5 +145,10 @@ public final class AcknowledgementsVC: MultiSectionTableComponentViewController 
                 }
             }
         }
+    }
+
+    // MARK: Helper Methods
+    @objc func backButtonItemTapped() {
+        self.delegate.backButtonItemTapped()
     }
 }

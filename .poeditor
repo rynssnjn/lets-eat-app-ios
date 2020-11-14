@@ -7,4 +7,3 @@ type = apple_strings
 
 #Translations
 trans.en = Source/Supporting Files/en.lproj/Localizable.strings
-trans.de = Source/Supporting Files/de.lproj/Localizable.strings

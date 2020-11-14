@@ -38,31 +38,42 @@ public struct RestaurantListState: ExpandableState {
 public final class RestaurantListVM: ViewModel<RestaurantListState> {
     private let service: RestaurantListService = RestaurantListService()
 
-    public func getRestaurants(page: Int) {
+    public func getRestaurants() {
         self.set(isLoading: true)
-        self.service.getRestaurants(page: page)
-            .onSuccess { [weak self] (restaurants: Restaurants) -> Void in
-                guard let s = self else { return }
-                s.setState { (state: inout RestaurantListState) -> Void in
-                    restaurants.restaurants.forEach { (restaurant: Restaurant) -> Void in
-                        if state.restaurants.contains(restaurant) == false {
-                            state.restaurants.append(restaurant)
+        self.withState { [weak self] (state: RestaurantListState) -> Void in
+            guard let s = self, let location = state.currentLocation else { return }
+            s.service.getRestaurants(page: state.currentPage, coordinates: location.coordinate)
+                .onSuccess { (restaurants: Restaurants) -> Void in
+                    s.setState { (state: inout RestaurantListState) -> Void in
+                        restaurants.restaurants.forEach { (restaurant: Restaurant) -> Void in
+                            if state.restaurants.contains(restaurant) == false {
+                                state.restaurants.append(restaurant)
+                            }
                         }
+                        state.currentPage += 1
                     }
-                    state.currentPage += 1
                 }
-            }
-            .onFailure { (error: NetworkingError) -> Void in
-                print(error.localizedDescription)
-            }
-            .onComplete { [weak self] (_) -> Void in
-                guard let s = self else { return }
-                s.set(isLoading: false)
-            }
+                .onFailure { (error: NetworkingError) -> Void in
+                    print(error.localizedDescription)
+                }
+                .onComplete { (_) -> Void in
+                    s.set(isLoading: false)
+                }
+        }
+
     }
 
     public func set(isLoading: Bool) {
         self.setState { $0.isLoading = isLoading }
     }
 
+    public func set(currentLocation: CLLocation) {
+        self.setState { (state: inout RestaurantListState) -> Void in
+            state.currentLocation = currentLocation
+        }
+
+        // Current Location is only define and set during first load of app. App needs current location
+        // to get list of restaurants on first load.
+        self.getRestaurants()
+    }
 }

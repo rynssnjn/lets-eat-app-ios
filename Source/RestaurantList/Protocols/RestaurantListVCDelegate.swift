@@ -12,6 +12,8 @@ public protocol RestaurantListVCDelegate: class {
 
     func goToAcknowledgements()
 
-    func openMaps(coordinates: CLLocationCoordinate2D)
+    func openMaps(restaurant: Restaurant)
+
+    func gotToWeb(url: String)
 
 }

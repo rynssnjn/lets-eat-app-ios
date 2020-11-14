@@ -31,35 +31,41 @@ extension UIImageView: ImageCacheInjected {
                 else {
                     return
                 }
-                let mapSnapshotOptions = MKMapSnapshotter.Options()
+                let options: MKMapSnapshotter.Options = MKMapSnapshotter.Options()
                 let coordinates: CLLocationCoordinate2D = CLLocationCoordinate2D(
                     latitude: CLLocationDegrees(latitude),
                     longitude: CLLocationDegrees(longitude)
                 )
-                let region = MKCoordinateRegion(center: coordinates, latitudinalMeters: 0.0, longitudinalMeters: 0.0)
-                mapSnapshotOptions.region = region
+                let region: MKCoordinateRegion = MKCoordinateRegion(
+                    center: coordinates,
+                    latitudinalMeters: 0.0,
+                    longitudinalMeters: 0.0
+                )
+                options.region = region
 
-                let snapShotter = MKMapSnapshotter(options: mapSnapshotOptions)
+                let shotter: MKMapSnapshotter = MKMapSnapshotter(options: options)
 
                 // takes snapshot of the map
-                snapShotter.start { [weak self] (snapshot: MKMapSnapshotter.Snapshot?, _) -> Void in
+                shotter.start { [weak self] (snapshot: MKMapSnapshotter.Snapshot?, _) -> Void in
                     guard let s = self else { return }
-                    if let snap = snapshot {
-                        let image = UIGraphicsImageRenderer(size: mapSnapshotOptions.size).image { _ in
-                            snap.image.draw(at: .zero)
+                    if let snapshot = snapshot {
+                        let image: UIImage = UIGraphicsImageRenderer(size: options.size)
+                            .image { _ in
+                                snapshot.image.draw(at: .zero)
+                                let point: CGPoint = snapshot.point(for: coordinates)
+                                let pinView: MKPinAnnotationView = MKPinAnnotationView(
+                                    annotation: nil,
+                                    reuseIdentifier: nil
+                                )
+                                pinView.image = #imageLiteral(resourceName: "map-marker")
+                                if let pinImage = pinView.image {
+                                    let pinPoint = CGPoint(
+                                        x: point.x - (pinImage.size.width / 2.0),
+                                        y: point.y - pinImage.size.height
+                                    )
 
-                            let pinView = MKPinAnnotationView(annotation: nil, reuseIdentifier: nil)
-                            pinView.image = #imageLiteral(resourceName: "map-marker")
-                            let pinImage = pinView.image
-
-                            var point = snap.point(for: coordinates)
-                            if s.bounds.contains(point) {
-                                point.x -= pinView.bounds.width
-                                point.y -= pinView.bounds.height
-                                point.x += pinView.centerOffset.x
-                                point.y += pinView.centerOffset.y
-                                pinImage?.draw(at: point)
-                            }
+                                    pinImage.draw(at: pinPoint)
+                                }
                         }
                         s.image = s.imageCacheManager.save(image: image, name: name)
                     } else {
