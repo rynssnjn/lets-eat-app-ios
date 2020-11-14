@@ -49,7 +49,7 @@ public struct SearchRequest: Request {
 
     public var headers: Set<Header> {
         return [
-            Header(key: Header.Key.custom("user-key"), value: Header.Value.custom(Constants.userKey))
+            Header(key: Header.Key.custom("user-key"), value: Header.Value.custom(APIKey.search.key))
         ]
     }
 }
