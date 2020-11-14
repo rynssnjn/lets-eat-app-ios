@@ -20,7 +20,8 @@ public struct RestaurantListState: ExpandableState {
             restaurants: [],
             currentPage: 0,
             currentLocation: nil,
-            isLoading: false
+            isLoading: false,
+            selectedRestaurant: nil
         )
     }
 
@@ -33,6 +34,9 @@ public struct RestaurantListState: ExpandableState {
     public var currentLocation: CLLocation?
 
     public var isLoading: Bool
+
+    public var selectedRestaurant: Restaurant?
+
 }
 
 public final class RestaurantListVM: ViewModel<RestaurantListState> {
@@ -43,9 +47,9 @@ public final class RestaurantListVM: ViewModel<RestaurantListState> {
         self.withState { [weak self] (state: RestaurantListState) -> Void in
             guard let s = self, let location = state.currentLocation else { return }
             s.service.getRestaurants(page: state.currentPage, coordinates: location.coordinate)
-                .onSuccess { (restaurants: Restaurants) -> Void in
+                .onSuccess { (response: SearchResponse) -> Void in
                     s.setState { (state: inout RestaurantListState) -> Void in
-                        restaurants.restaurants.forEach { (restaurant: Restaurant) -> Void in
+                        response.restaurants.forEach { (restaurant: Restaurant) -> Void in
                             if state.restaurants.contains(restaurant) == false {
                                 state.restaurants.append(restaurant)
                             }

@@ -14,10 +14,18 @@ let NetworkQueue: DispatchQueue = DispatchQueue(
     attributes: DispatchQueue.Attributes.concurrent
 )
 
-public enum Constants {
+public enum APIKey {
+    case search
+    case review
 
-    public static let userKey = "36cd11b60fd6a76958e11f22443bcd4e"
-
+    public var key: String {
+        switch self {
+            case .search:
+                return "36cd11b60fd6a76958e11f22443bcd4e"
+            case .review:
+                return "4c3aca17ef64bdd1f703c1317dbc8ab7"
+        }
+    }
 }
 
 public let UIIdiom: UIUserInterfaceIdiom = UIDevice.current.userInterfaceIdiom

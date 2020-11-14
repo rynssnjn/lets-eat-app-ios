@@ -16,4 +16,6 @@ public protocol RestaurantListVCDelegate: class {
 
     func gotToWeb(url: String)
 
+    func goToReviews(restaurant: Restaurant)
+
 }
