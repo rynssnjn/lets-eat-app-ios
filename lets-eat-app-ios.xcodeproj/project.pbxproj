@@ -249,7 +249,6 @@
 		8E5330F42556A8D50088B120 /* Source */ = {
 			isa = PBXGroup;
 			children = (
-				8EFC497825603F4D00C72F6B /* Reviews */,
 				8E8326392557D6B400E26CC0 /* Extensions */,
 				8E4067172556ACBA00A8445A /* Supporting Files */,
 				8E9121462556DA1F004E5D01 /* Utilities */,
@@ -257,6 +256,7 @@
 				8EBE29392561052200AF5061 /* Components */,
 				8E4067122556ABBB00A8445A /* AppControllers */,
 				8E40674E2556B96B00A8445A /* RestaurantList */,
+				8EFC497825603F4D00C72F6B /* Reviews */,
 				8E92FEEA255FEA94009F0E35 /* RestaurantWeb */,
 				8E83263E2557E83000E26CC0 /* Acknowledgements */,
 			);

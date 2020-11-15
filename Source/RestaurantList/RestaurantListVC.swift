@@ -42,10 +42,6 @@ public final class RestaurantListVC: MultiSectionTableComponentViewController {
         ]
     }
 
-    private var computedHeight: CGFloat {
-        return UIScreen.main.bounds.height * 0.8
-    }
-
     // MARK: UIViewController LifeCycle Methods
     public override func viewDidLoad() {
         super.viewDidLoad()
@@ -139,7 +135,7 @@ public final class RestaurantListVC: MultiSectionTableComponentViewController {
                     sectionController.errorMessageComponent(for: SectionController.SupplementaryView.header) {
                         (component: inout ErrorMessageComponent) -> Void in
                         component.id = "ErrorMessage"
-                        component.height = s.computedHeight
+                        component.height = Constants.contentHeight
                         component.errorMessage = "location_error".localized
                     }
                 } else {
@@ -147,7 +143,7 @@ public final class RestaurantListVC: MultiSectionTableComponentViewController {
                         sectionController.errorMessageComponent(for: SectionController.SupplementaryView.header) {
                             (component: inout ErrorMessageComponent) -> Void in
                             component.id = "NoRestaurantError"
-                            component.height = s.computedHeight
+                            component.height = Constants.contentHeight
                             component.errorMessage = "no_restaurants".localized
                         }
                     } else {

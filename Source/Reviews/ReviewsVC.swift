@@ -42,10 +42,6 @@ public final class ReviewsVC: MultiSectionTableComponentViewController {
         ]
     }
 
-    private var computedHeight: CGFloat {
-        return UIScreen.main.bounds.height * 0.8
-    }
-
     // MARK: LifeCycle Methods
     public override func viewDidLoad() {
         super.viewDidLoad()
@@ -87,7 +83,7 @@ public final class ReviewsVC: MultiSectionTableComponentViewController {
                     sectionController.errorMessageComponent(for: SectionController.SupplementaryView.header) {
                         (component: inout ErrorMessageComponent) -> Void in
                         component.id = "ErrorMessage"
-                        component.height = s.computedHeight
+                        component.height = Constants.contentHeight
                         component.errorMessage = "no_reviews".localized.replacingOccurrences(of: "%s", with: restaurant.name)
                     }
                 } else {

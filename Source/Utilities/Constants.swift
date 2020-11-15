@@ -28,4 +28,11 @@ public enum APIKey {
     }
 }
 
+public enum Constants {
+
+    // Height of the screen. Should be only use in views with UITableView that fits the screen.
+    public static let contentHeight: CGFloat = UIScreen.main.bounds.height * 0.8
+
+}
+
 public let UIIdiom: UIUserInterfaceIdiom = UIDevice.current.userInterfaceIdiom
