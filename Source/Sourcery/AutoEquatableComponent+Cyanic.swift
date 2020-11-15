@@ -34,6 +34,15 @@ public func == (lhs: CategoriesComponent, rhs: CategoriesComponent) -> Bool {
     guard lhs.height == rhs.height else { return false }
     return true
 }
+// MARK: - ErrorMessageComponent AutoEquatableComponent
+extension ErrorMessageComponent: Equatable {}
+public func == (lhs: ErrorMessageComponent, rhs: ErrorMessageComponent) -> Bool {
+    guard lhs.errorMessage == rhs.errorMessage else { return false }
+    guard lhs.id == rhs.id else { return false }
+    guard lhs.width == rhs.width else { return false }
+    guard lhs.height == rhs.height else { return false }
+    return true
+}
 // MARK: - ImageHeaderComponent AutoEquatableComponent
 extension ImageHeaderComponent: Equatable {}
 public func == (lhs: ImageHeaderComponent, rhs: ImageHeaderComponent) -> Bool {

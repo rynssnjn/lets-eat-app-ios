@@ -129,106 +129,122 @@ public final class RestaurantListVC: MultiSectionTableComponentViewController {
     // swiftlint:disable:next function_body_length
     public override func buildSections(_ sectionsController: inout MultiSectionController) {
         Cyanic.withState(of: self.viewModel) { (state: RestaurantListState) -> Void in
-            sectionsController.sectionController { (sectionController: inout SectionController) -> Void in
-                sectionController.staticLabelComponent(for: SectionController.SupplementaryView.header) {
-                    (component: inout StaticLabelComponent) -> Void in
-                    component.id = "Title"
-                    component.backgroundColor = UIColor.white
-                    component.text = Text.unattributed("nearby_restaurants".localized)
-                    component.font = UIFont.boldSystemFont(ofSize: 25.0)
-                    component.alignment = Alignment.centerLeading
-                    component.configuration = { (view: UILabel) -> Void in
-                        view.textColor = UIColor.black
+            sectionsController.sectionController { [weak self] (sectionController: inout SectionController) -> Void in
+                guard let s = self else { return }
+                if state.currentLocation == nil && state.isLoading == false {
+                    sectionController.errorMessageComponent(for: SectionController.SupplementaryView.header) {
+                        (component: inout ErrorMessageComponent) -> Void in
+                        component.id = "ErrorMessage"
+                        component.height = Constants.contentHeight
+                        component.errorMessage = "location_error".localized
                     }
-                    component.insets = EdgeInsets(top: 30.0, left: 20.0, bottom: 30.0, right: 15.0)
-                }
-                sectionController.buildComponents { [weak self] (componentsController: inout ComponentsController) -> Void in
-                        let insets: EdgeInsets = EdgeInsets(top: 0.0, left: 20.0, bottom: 0.0, right: 15.0)
-                        guard let s = self else { return }
-
-                        state.restaurants.forEach { (restaurant: Restaurant) -> Void in
-                            let restaurantId: String = restaurant.id
-                            let restaurantComponent: RestaurantComponent = componentsController
-                                .restaurantComponent { (component: inout RestaurantComponent) -> Void in
-                                    let id: String = restaurantId
-                                    let isExpanded: Bool = state.expandableDict[id] == true
-                                    component.id = id
-                                    component.isExpanded = isExpanded
-                                    component.restaurant = restaurant
-                                    component.setExpandableState = { (id: String, isExpanded: Bool) -> Void in
-                                        s.openDetails(id: id, isExpanded: isExpanded)
-                                    }
+                } else {
+                    if state.isLoading == false && state.restaurants.isEmpty {
+                        sectionController.errorMessageComponent(for: SectionController.SupplementaryView.header) {
+                            (component: inout ErrorMessageComponent) -> Void in
+                            component.id = "NoRestaurantError"
+                            component.height = Constants.contentHeight
+                            component.errorMessage = "no_restaurants".localized
+                        }
+                    } else {
+                        sectionController.staticLabelComponent(for: SectionController.SupplementaryView.header) {
+                            (component: inout StaticLabelComponent) -> Void in
+                            component.id = "Title"
+                            component.backgroundColor = UIColor.white
+                            component.text = Text.unattributed("nearby_restaurants".localized)
+                            component.font = UIFont.boldSystemFont(ofSize: 25.0)
+                            component.alignment = Alignment.centerLeading
+                            component.configuration = { (view: UILabel) -> Void in
+                                view.textColor = UIColor.black
                             }
+                            component.insets = EdgeInsets(top: 30.0, left: 20.0, bottom: 30.0, right: 15.0)
+                        }
+                        sectionController.buildComponents { (componentsController: inout ComponentsController) -> Void in
+                            let insets: EdgeInsets = EdgeInsets(top: 0.0, left: 20.0, bottom: 0.0, right: 15.0)
 
-                            if restaurantComponent.isExpanded {
-                                componentsController.locationComponent { (component: inout LocationComponent) -> Void in
-                                    component.id = "\(restaurantId)Location"
-                                    component.location = restaurant.location
-                                    component.onTap = { () -> Void in
-                                        s.openMaps(restaurant: restaurant)
-                                    }
+                            state.restaurants.forEach { (restaurant: Restaurant) -> Void in
+                                let restaurantId: String = restaurant.id
+                                let restaurantComponent: RestaurantComponent = componentsController
+                                    .restaurantComponent { (component: inout RestaurantComponent) -> Void in
+                                        let id: String = restaurantId
+                                        let isExpanded: Bool = state.expandableDict[id] == true
+                                        component.id = id
+                                        component.isExpanded = isExpanded
+                                        component.restaurant = restaurant
+                                        component.setExpandableState = { (id: String, isExpanded: Bool) -> Void in
+                                            s.openDetails(id: id, isExpanded: isExpanded)
+                                        }
                                 }
 
+                                if restaurantComponent.isExpanded {
+                                    componentsController.locationComponent { (component: inout LocationComponent) -> Void in
+                                        component.id = "\(restaurantId)Location"
+                                        component.location = restaurant.location
+                                        component.onTap = { () -> Void in
+                                            s.openMaps(restaurant: restaurant)
+                                        }
+                                    }
+
+                                    componentsController.buttonComponent { (component: inout ButtonComponent) -> Void in
+                                        component.id = "\(restaurantId)Address"
+                                        component.title = restaurant.location.address
+                                        component.height = 60.0
+                                        component.insets = insets
+                                        component.configuration = { (view: UIButton) -> Void in
+                                            view.titleLabel?.numberOfLines = 0
+                                        }
+                                        component.onTap = { (_: UIButton) -> Void in
+                                            s.openMaps(restaurant: restaurant)
+                                        }
+                                    }
+
+                                    componentsController.imageHeaderComponent { (component: inout ImageHeaderComponent) -> Void in
+                                        component.id = "\(restaurantId)ImageHeader"
+                                        component.imageURL = restaurant.featuredImage
+                                    }
+
+                                    componentsController.categoriesComponent { (component: inout CategoriesComponent) -> Void in
+                                        component.id = "\(restaurantId)Schedule"
+                                        component.category = Category.time
+                                        component.text = restaurant.schedule
+                                    }
+
+                                    componentsController.categoriesComponent { (component: inout CategoriesComponent) -> Void in
+                                        component.id = "\(restaurantId)Type"
+                                        component.category = Category.type
+                                        component.text = restaurant.type
+                                    }
+
+                                    componentsController.menuPhotosComponent { (component: inout MenuPhotosComponent) -> Void in
+                                        component.id = "\(restaurantId)Buttons"
+                                        component.height = 60.0
+                                        component.onMenuButtonTapped = { () -> Void in
+                                            s.delegate.gotToWeb(url: restaurant.menuURL)
+                                        }
+                                        component.onPhotosButtonTapped = { () -> Void in
+                                            s.delegate.gotToWeb(url: restaurant.photosURL)
+                                        }
+                                    }
+                                }
+                            }
+
+                            if state.restaurants.isEmpty == false && state.isLoading == false {
                                 componentsController.buttonComponent { (component: inout ButtonComponent) -> Void in
-                                    component.id = "\(restaurantId)Address"
-                                    component.title = restaurant.location.address
-                                    component.height = 60.0
-                                    component.insets = insets
-                                    component.configuration = { (view: UIButton) -> Void in
-                                        view.titleLabel?.numberOfLines = 0
-                                    }
+                                    component.id = "loadMoreButton"
+                                    component.title = "load_more".localized
                                     component.onTap = { (_: UIButton) -> Void in
-                                        s.openMaps(restaurant: restaurant)
-                                    }
-                                }
-
-                                componentsController.imageHeaderComponent { (component: inout ImageHeaderComponent) -> Void in
-                                    component.id = "\(restaurantId)ImageHeader"
-                                    component.imageURL = restaurant.featuredImage
-                                }
-
-                                componentsController.categoriesComponent { (component: inout CategoriesComponent) -> Void in
-                                    component.id = "\(restaurantId)Schedule"
-                                    component.category = Category.time
-                                    component.text = restaurant.schedule
-                                }
-
-                                componentsController.categoriesComponent { (component: inout CategoriesComponent) -> Void in
-                                    component.id = "\(restaurantId)Type"
-                                    component.category = Category.type
-                                    component.text = restaurant.type
-                                }
-
-                                componentsController.menuPhotosComponent { (component: inout MenuPhotosComponent) -> Void in
-                                    component.id = "\(restaurantId)Buttons"
-                                    component.height = 60.0
-                                    component.onMenuButtonTapped = { [weak self] () -> Void in
-                                        guard let s = self else { return }
-                                        s.delegate.gotToWeb(url: restaurant.menuURL)
-                                    }
-                                    component.onPhotosButtonTapped = { [weak self] () -> Void in
-                                        guard let s = self else { return }
-                                        s.delegate.gotToWeb(url: restaurant.photosURL)
+                                        s.getRestaurants()
                                     }
                                 }
                             }
                         }
-
-                        if state.restaurants.isEmpty == false && state.isLoading == false {
-                            componentsController.buttonComponent { (component: inout ButtonComponent) -> Void in
-                                component.id = "loadMoreButton"
-                                component.title = "load_more".localized
-                                component.onTap = { (_: UIButton) -> Void in
-                                    s.getRestaurants()
-                                }
-                            }
-                        }
+                    }
                 }
             }
         }
     }
 
-    // MARK: Helper Functions
+    // MARK: Target Action Functions
     @objc func librariesItemTapped() {
         self.delegate.goToAcknowledgements()
     }

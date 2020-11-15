@@ -136,7 +136,6 @@ public final class RestaurantComponentLayout: SizeLayout<UIView>, ComponentLayou
             alignment: Alignment.centerLeading,
             flexibility: Flexibility.high,
             sublayouts: [restaurantNameLayout, starsLayout]
-
         )
 
         let restaurantStackLayout: StackLayout<UIView> = StackLayout<UIView>(
