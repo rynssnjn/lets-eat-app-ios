@@ -51,6 +51,7 @@
 		8E92FEEE255FEBEB009F0E35 /* RestaurantWebCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E92FEED255FEBEB009F0E35 /* RestaurantWebCoordinator.swift */; };
 		8E92FEF5255FEC60009F0E35 /* RestaurantWebVCDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E92FEF4255FEC60009F0E35 /* RestaurantWebVCDelegate.swift */; };
 		8E92FEF8255FECFE009F0E35 /* RestaurantWebVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E92FEF7255FECFE009F0E35 /* RestaurantWebVC.swift */; };
+		8EBE293C2561055000AF5061 /* ErrorMessageComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EBE293B2561055000AF5061 /* ErrorMessageComponent.swift */; };
 		8EE849A1255EBF7400C0417D /* MenuPhotosComponents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EE849A0255EBF7400C0417D /* MenuPhotosComponents.swift */; };
 		8EFC497B25603FF000C72F6B /* Critics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EFC497A25603FF000C72F6B /* Critics.swift */; };
 		8EFC497F2560403E00C72F6B /* Review.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EFC497E2560403E00C72F6B /* Review.swift */; };
@@ -114,6 +115,7 @@
 		8E92FEED255FEBEB009F0E35 /* RestaurantWebCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantWebCoordinator.swift; sourceTree = "<group>"; };
 		8E92FEF4255FEC60009F0E35 /* RestaurantWebVCDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantWebVCDelegate.swift; sourceTree = "<group>"; };
 		8E92FEF7255FECFE009F0E35 /* RestaurantWebVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantWebVC.swift; sourceTree = "<group>"; };
+		8EBE293B2561055000AF5061 /* ErrorMessageComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorMessageComponent.swift; sourceTree = "<group>"; };
 		8EE849A0255EBF7400C0417D /* MenuPhotosComponents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuPhotosComponents.swift; sourceTree = "<group>"; };
 		8EFC497A25603FF000C72F6B /* Critics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Critics.swift; sourceTree = "<group>"; };
 		8EFC497E2560403E00C72F6B /* Review.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Review.swift; sourceTree = "<group>"; };
@@ -252,6 +254,7 @@
 				8E4067172556ACBA00A8445A /* Supporting Files */,
 				8E9121462556DA1F004E5D01 /* Utilities */,
 				8E4068582556CF8F00A8445A /* Sourcery */,
+				8EBE29392561052200AF5061 /* Components */,
 				8E4067122556ABBB00A8445A /* AppControllers */,
 				8E40674E2556B96B00A8445A /* RestaurantList */,
 				8E92FEEA255FEA94009F0E35 /* RestaurantWeb */,
@@ -393,6 +396,14 @@
 				8E92FEF4255FEC60009F0E35 /* RestaurantWebVCDelegate.swift */,
 			);
 			path = Protocols;
+			sourceTree = "<group>";
+		};
+		8EBE29392561052200AF5061 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				8EBE293B2561055000AF5061 /* ErrorMessageComponent.swift */,
+			);
+			path = Components;
 			sourceTree = "<group>";
 		};
 		8EFC497825603F4D00C72F6B /* Reviews */ = {
@@ -626,6 +637,7 @@
 				8E4067F12556BD3900A8445A /* RestaurantListVM.swift in Sources */,
 				8E4067502556B99000A8445A /* RestaurantListCoordinator.swift in Sources */,
 				8E8326402557E88000E26CC0 /* AcknowledgementsCoordinator.swift in Sources */,
+				8EBE293C2561055000AF5061 /* ErrorMessageComponent.swift in Sources */,
 				8E8326502557E9EE00E26CC0 /* Acknowledgement.swift in Sources */,
 				8E83263B2557D6C900E26CC0 /* UIImageViewExtensions.swift in Sources */,
 				8EFC49882560455700C72F6B /* ReviewsCoordinator.swift in Sources */,

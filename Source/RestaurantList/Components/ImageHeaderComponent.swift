@@ -52,8 +52,8 @@ public struct ImageHeaderComponent: ImageHeaderComponentType {
 public final class ImageHeaderComponentLayout: SizeLayout<UIView>, ComponentLayout {
     public init(component: ImageHeaderComponent) {
         let imageLayout: SizeLayout<UIImageView> = SizeLayout<UIImageView>(
-            width: component.height,
-            height: component.width,
+            width: component.width,
+            height: component.height,
             alignment: Alignment.fill,
             flexibility: Flexibility.high,
             viewReuseId: "\(ImageHeaderComponentLayout.identifier)_imageHeader",

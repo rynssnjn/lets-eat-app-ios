@@ -8,3 +8,6 @@
 "back" = "Back";
 "reviews" = "Reviews";
 "commented" = "Commented";
+"location_error" = "Current location not found. Kindly check your location settings.";
+"no_reviews" = "No reviews found for %s.";
+"no_restaurants" = "No available restaurants found in your current location.";

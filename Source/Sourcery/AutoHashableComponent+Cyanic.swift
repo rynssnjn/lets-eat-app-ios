@@ -14,6 +14,15 @@ extension CategoriesComponent: Hashable {
         self.height.hash(into: &hasher)
     }
 }
+// MARK: - ErrorMessageComponent AutoHashableComponent
+extension ErrorMessageComponent: Hashable {
+    public func hash(into hasher: inout Hasher) {
+        self.errorMessage.hash(into: &hasher)
+        self.id.hash(into: &hasher)
+        self.width.hash(into: &hasher)
+        self.height.hash(into: &hasher)
+    }
+}
 // MARK: - ImageHeaderComponent AutoHashableComponent
 extension ImageHeaderComponent: Hashable {
     public func hash(into hasher: inout Hasher) {

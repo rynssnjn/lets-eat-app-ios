@@ -27,6 +27,26 @@ public extension ComponentsController {
     }
 
     /**
+        Generates a ErrorMessageComponent instance and configures its properties with the given closure. You must provide a
+        unique id in the configuration block, otherwise it will force a fatalError.
+        - Parameters:
+            - configuration: The closure that mutates the mutable ErrorMessageComponent.
+            - mutableComponent: The ErrorMessageComponent instance to be mutated/configured.
+        - Returns:
+            ErrorMessageComponent
+    */
+    @discardableResult
+    mutating func errorMessageComponent(configuration: (_ mutableComponent: inout ErrorMessageComponent) -> Void) -> ErrorMessageComponent {
+        var mutableComponent: ErrorMessageComponent = ErrorMessageComponent(id: CyanicConstants.invalidID)
+        configuration(&mutableComponent)
+        mutableComponent.width = self.width
+        guard ComponentStateValidator.hasValidIdentifier(mutableComponent)
+            else { fatalError("You must have a unique identifier for this component") }
+        self.add(mutableComponent)
+        return mutableComponent
+    }
+
+    /**
         Generates a ImageHeaderComponent instance and configures its properties with the given closure. You must provide a
         unique id in the configuration block, otherwise it will force a fatalError.
         - Parameters:
@@ -141,6 +161,33 @@ public extension SectionController {
     @discardableResult
     mutating func categoriesComponent(for supplementaryView: SectionController.SupplementaryView, configuration: (_ mutableComponent: inout CategoriesComponent) -> Void) -> CategoriesComponent {
         var mutableComponent: CategoriesComponent = CategoriesComponent(id: CyanicConstants.invalidID)
+        configuration(&mutableComponent)
+        mutableComponent.width = self.width
+        guard ComponentStateValidator.hasValidIdentifier(mutableComponent)
+            else { fatalError("You must have a unique identifier for this component") }
+
+        switch supplementaryView {
+            case .header:
+                self.headerComponent = mutableComponent.asAnyComponent
+            case .footer:
+                self.footerComponent = mutableComponent.asAnyComponent
+        }
+
+        return mutableComponent
+    }
+
+    /**
+        Generates a ErrorMessageComponent instance and configures its properties with the given closure. You must provide a
+        unique id in the configuration block, otherwise it will force a fatalError.
+        - Parameters:
+            - configuration: The closure that mutates the mutable ErrorMessageComponent.
+            - mutableComponent: The ErrorMessageComponent instance to be mutated/configured.
+        - Returns:
+            ErrorMessageComponent
+    */
+    @discardableResult
+    mutating func errorMessageComponent(for supplementaryView: SectionController.SupplementaryView, configuration: (_ mutableComponent: inout ErrorMessageComponent) -> Void) -> ErrorMessageComponent {
+        var mutableComponent: ErrorMessageComponent = ErrorMessageComponent(id: CyanicConstants.invalidID)
         configuration(&mutableComponent)
         mutableComponent.width = self.width
         guard ComponentStateValidator.hasValidIdentifier(mutableComponent)
