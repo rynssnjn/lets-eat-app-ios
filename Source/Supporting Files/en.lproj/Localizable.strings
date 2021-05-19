@@ -1,13 +1,25 @@
 "schedule" = "Schedule";
+
 "type" = "Type";
+
 "disclaimer" = "Legal Notice";
+
 "nearby_restaurants" = "Nearby Restaurants";
+
 "load_more" = "Load More";
+
 "view_menu" = "Open Menu";
+
 "view_photos" = "Open Photos";
+
 "back" = "Back";
+
 "reviews" = "Reviews";
+
 "commented" = "Commented";
+
 "location_error" = "Current location not found. Kindly check your location settings.";
+
 "no_reviews" = "No reviews found for %s.";
+
 "no_restaurants" = "No available restaurants found in your current location.";
